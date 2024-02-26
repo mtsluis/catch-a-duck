@@ -32,7 +32,8 @@ html {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    font-size: 10vmin;
+    font-family:'Sixtyfour', sans-serif;
+    font-size: 8vmin;
     color: #FFBF00;
     text-align: center;
     animation: animate  
@@ -51,35 +52,46 @@ html {
     flex-wrap: wrap;
     align-items: center;
     margin-top: 50px;
-    color: #89CFF0;
-    padding: 0;
-}
-
-.p-choices{
-    width: 250px;
+    padding-top: 80px;
+    font-family: 'Press Start 2P', sans-serif;
     font-size: 25px;
 }
-.p-choices:hover{
-    color: white;
+
+.p-c{
+    color: #89CFF0;
     cursor: pointer;
+    z-index: 1;
+}
+.p-c:hover{
+    color: white;
 }
 
-.right-span{
-    padding-left: 50px;
-}
+
 .top-scores{
     margin-top: 50px;
+    padding-top: 80px;
+    font-family: 'Press Start 2P', sans-serif;
     text-align: center;
-    color: #C69400;
-    font-size: 20px;
+    color: #29e626;
+    font-size: 15px;
 }
 .credits{
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 10px;
     text-align: center;
     color: #FFD864;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     width: 100%;
 }
+
+canvas{
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 
 
 
