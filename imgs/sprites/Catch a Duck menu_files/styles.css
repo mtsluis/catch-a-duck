@@ -28,7 +28,6 @@ html {
     height: 200px;
 }
 .menu-title{
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -46,6 +45,7 @@ html {
     padding-left: 150px;
 }
 .player-choices{
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -68,10 +68,9 @@ html {
     padding-left: 50px;
 }
 .top-scores{
-    margin-top: 50px;
+
     text-align: center;
     color: #C69400;
-    font-size: 20px;
 }
 .credits{
     text-align: center;
