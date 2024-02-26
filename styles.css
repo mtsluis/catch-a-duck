@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 html {
     margin: 0px;
@@ -11,14 +12,43 @@ html {
 body {
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(78, 157, 231);
+    background-color: rgb(70, 164, 207);
+    z-index: 20;
 }
 
 #background {
     width: 100%;
     height: 100%;
     background-image: url("imgs/stage-screen.png");
-    background-size: cover;
+    background-size: 100% 100%;
+    
+}
+
+#dog {
+    position: relative;
+    top: 80%;
+    background: url("imgs/dog_sprite2.png") no-repeat 0px -1px;
+    transform: scale(3);
+    margin-left: 15%;
+    width: 61px;
+	height: 43px;
+    animation: walk 1s steps(3) infinite, smell 2s steps(2);
+}
+
+@keyframes walk {
+    from{
+        background-position-x: 0px;
+    }
+    to{
+        background-position-x: -178px;
+    }
+ }
+
+@keyframes smell {
+    from{
+        background-position-x: -179px;
+    }
+    to{
+        background-position-x: -301px;
+    }
 }
