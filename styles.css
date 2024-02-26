@@ -29,13 +29,30 @@ body {
     top: 80%;
     background: url("imgs/dog_sprite2.png") no-repeat 0px -1px;
     transform: scale(3);
-    margin-left: 15%;
     width: 61px;
-	height: 43px;
-    animation: walk 1s steps(3) infinite, smell 2s steps(2);
 }
 
-@keyframes walk {
+.walk {
+    margin-left: 15%;
+	height: 43px;
+    animation: 
+    moveRight 3s linear,
+    walkLoop 0.5s steps(3) infinite;
+}
+
+.smell {
+    margin-left: 40%;
+	height: 43px;
+    animation: smell 1s steps(2) infinite;
+}
+
+.jump {
+	height: 48px;
+    margin-left: 40%;
+    animation: jump 5s linear, find-duck 1s steps(2) forwards;
+}
+
+@keyframes walkLoop {
     from{
         background-position-x: 0px;
     }
@@ -44,11 +61,63 @@ body {
     }
  }
 
+@keyframes moveRight {
+    0% {
+        margin-left: 15%;
+    }
+
+    100% {
+        margin-left: 40%;
+    } 
+}
+
 @keyframes smell {
     from{
         background-position-x: -179px;
     }
     to{
         background-position-x: -301px;
+    }
+}
+
+@keyframes find-duck {
+    from{
+        background-position-x: 0px;
+        background-position-y: -59px;
+    }
+    to{
+        background-position-x: -119px;
+        background-position-y: -59px;
+    }
+}
+
+@keyframes jump {
+    10%{
+        top: 80%;
+        margin-left: 40%;
+    } 
+    15%{
+        top: 63%;
+        margin-left: 45%;
+    }
+    65%{
+        top: 63%;
+        margin-left: 46%;
+        transform: scale(3);
+
+    }
+    75%{
+        top: 73%;
+        margin-left: 48%;
+        transform: scale(2.5);
+    }
+    
+    77%{
+        transform: scale(1);
+    }
+    99%{
+        top: 90%;
+        margin-left: 55%;
+        z-index: -1;
     }
 }
