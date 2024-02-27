@@ -5,8 +5,7 @@ const dogElement = document.getElementById("dog");
 
 
 window.onload = () => {
-    
-
+    //dogIntro();
 }
 
 
