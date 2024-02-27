@@ -11,8 +11,8 @@ html {
 body {
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: flex-end; */
     background-color: rgb(78, 157, 231);
 }
 
@@ -25,10 +25,9 @@ body {
 }
 
 .game-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: flex-end;
+    display: grid;
+    grid-template-columns: .5fr repeat(4, 1fr) .5fr;
+    grid-template-columns: .5fr repeat(3, 31vh) .5fr;
 }
 
 .round-container {
@@ -44,9 +43,14 @@ body {
     border: 0.2em solid #a7c957;
     border-radius: .25em;
     padding: .05em;
+    grid-column: 2;
+    grid-row: 4;
+    justify-items: center;
 }
 
 .shot-container {
+    grid-column: 3;
+    grid-row: 4;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -77,6 +81,8 @@ body {
 }
 
 .hit-container {
+    grid-column: 4;
+    grid-row: 4;
     display: grid;
     grid-template-columns: 11fr;
     grid-template-rows: repeat(2, 1fr);
@@ -118,6 +124,8 @@ body {
 }
 
 .score-container {
+    grid-column: 6;
+    grid-row: 4;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
