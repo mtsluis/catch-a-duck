@@ -4,11 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catch a Duck - Browser Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="game-styles.css">
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div id="background"></div>
-    
+    <div id="background">
+        <div id="display-info">
+            <!--<div class="round-alert">ROUND<span class="round-number">1</span></div>-->
+            <!--<div class="perfect-score">PERFECT!!</div>-->
+            <!--<div class="fly-away">FLY AWAY</div>-->
+            <div class="game-over">GAME OVER</div>
+        </div>
+        <div id="game-info">
+            <div class="round-container">R=<span class="round-number">1</span></div>
+            <div class="shot-container">
+                <div class="bullets"></div>
+                <div class="bullets"></div>
+                <div class="bullets"></div>
+                <div class="shot">SHOT</div>
+            </div>
+            <div class="hit-container">
+                <div class="hit">HIT</div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="duck"></div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+            </div>
+            <div class="score-container">
+                <div class="score">003500</div>
+                <div class="score-text">SCORE</div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
