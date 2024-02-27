@@ -24,10 +24,10 @@ body {
     background-size: cover;
 }
 
-.game-info {
+#game-info {
     display: grid;
-    grid-template-columns: .5fr repeat(4, 1fr) .5fr;
-    grid-template-columns: .5fr repeat(3, 31vh) .5fr;
+    grid-template-columns: .5fr repeat(3, 1fr) .5fr 1fr;
+    grid-template-rows: .5fr repeat(2, 45vh) .5fr;
 }
 
 .round-container {
