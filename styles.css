@@ -22,6 +22,7 @@ body {
     z-index: 0;
     background-image: url("imgs/stage-screen.png");
     background-size: cover;
+    position: relative;
 }
 
 #game-info {
@@ -29,6 +30,18 @@ body {
     grid-template-columns: .5fr repeat(3, 1fr) .5fr 1fr;
     grid-template-rows: .5fr repeat(2, 45vh) .5fr;
 }
+
+#display-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
 
 .round-container {
     color: #a7c957;
@@ -84,7 +97,7 @@ body {
     grid-column: 4;
     grid-row: 4;
     display: grid;
-    grid-template-columns: 11fr;
+    grid-template-columns: repeat(11, 1fr);
     grid-template-rows: repeat(2, 1fr);
     width: 16em;
     height: 3em;
@@ -143,3 +156,72 @@ body {
     padding-right: .05em;
 }
 
+
+.round-alert {
+    width: 180px;
+    height: 120px;
+    box-sizing: border-box;
+    background-color: black;
+    border: 0.2em solid white;
+    border-radius: .5em;
+    font-size: 30px;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.perfect-score {
+    width: 190px;
+    height: 100px;
+    box-sizing: border-box;
+    background-color: black;
+    border: 0.2em solid white;
+    border-radius: .5em;
+    font-size: 30px;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fly-away {
+    width: 190px;
+    height: 100px;
+    box-sizing: border-box;
+    background-color: black;
+    border: 0.2em solid white;
+    border-radius: .5em;
+    font-size: 30px;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-over {
+    width: 300px;
+    height: 100px;
+    box-sizing: border-box;
+    background-color: black;
+    border: 0.2em solid white;
+    border-radius: .5em;
+    font-size: 40px;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
