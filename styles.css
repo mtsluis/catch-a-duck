@@ -14,6 +14,7 @@ body {
     display: flex;
     background-color: rgb(70, 164, 207);
     z-index: 20;
+    cursor: url("imgs/crosshairs.png"), pointer;
 }
 
 #background {
@@ -27,7 +28,7 @@ body {
 #dog {
     position: relative;
     top: 80%;
-    background: url("imgs/dog_sprite2.png") no-repeat 0px -1px;
+    background: url("imgs/dog-sprite.png") no-repeat 0px -1px;
     transform: scale(3);
     width: 61px;
 }

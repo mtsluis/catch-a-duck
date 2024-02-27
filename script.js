@@ -5,7 +5,8 @@ const dogElement = document.getElementById("dog");
 
 
 window.onload = () => {
-    dogIntro();
+    
+
 }
 
 
@@ -19,11 +20,10 @@ const dogIntro = () => {
     }, 3000);
     setTimeout(() => {
         dogJump();
-    }, 5000);
+    }, 4900);
     setTimeout(() => {
         toggleDog();
-    }, 9900);
-    
+    }, 9900);    
 }
 
 const dogWalk = () => {
@@ -39,5 +39,5 @@ const dogJump = () => {
 }
 
 const toggleDog = () => {
-    dogElement.style.display = "none";
+    dogElement.style.zIndex = "-1";
 }
