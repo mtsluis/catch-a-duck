@@ -1,5 +1,8 @@
 let intervalId;
-let duckCounter = 0;
+let duckDirectionCounter = 1;
+let duckDirectionInterval = 1000;
+
+const bodyElement = document.body;
 const dogElement = document.getElementById("dog");
 const duckElement = document.getElementsByClassName("duck")[0];
 
@@ -27,29 +30,34 @@ duckElement.addEventListener('click', () => {
 //Visual methods
 const moveDuck = () => {
     if (!intervalId) {
-      intervalId = setInterval(changeDirection, 1000);
+      intervalId = setInterval(changeDirection, duckDirectionInterval);
     }
 }
 
 const changeDirection = () => {
-    if (duckCounter === 6) {
+    if (duckDirectionCounter === 5) {
         clearInterval(intervalId);
         intervalId = null;
+        setTimeout(() => {
+            duckEscape();
+        }, duckDirectionInterval);
     }
+
     let x = randomInt(-40, 45);
-    if (duckCounter === 0) {
+    if (duckDirectionCounter === 0) {
         duckElement.style.translate = x + 'vw ' + '-50vh';
-        duckCounter++;
+        duckDirectionCounter++;
         return
     } 
 
     let y = randomInt(-10, -75);
     checkDirection(x,y);
     duckElement.style.translate = x + 'vw ' + y + 'vh';
-    duckCounter++;
+    duckDirectionCounter++;
 }
 
 const checkDirection = (x, y) => {
+    //FIXME fix visual direction 
     duckElement.style.rotate = "0deg";
     duckElement.style.transform = "scale(2.5)";
     if (x > 0 && y > 0) {
@@ -93,14 +101,19 @@ const checkDuckType = (duckType, isShot) => {
     }
 }
 
-const duckFall = () => {
-    checkDuckType(duckElement.id, true);
-    var rect = duckElement.getBoundingClientRect();
+const duckFall = (isShot) => {
+    checkDuckType(duckElement.id, isShot);
+    const currentX = duckElement.getBoundingClientRect().x;
+    duckElement.style.translate = "calc(" + currentX + "px - 45vw) 16vh";
+}
 
-    // the position related to the viewport
-    const x = rect.x;
-    const y = rect.y;
-    duckElement.style.translate = "calc(" + x + "px - 45vw) 15vh";
+const duckEscape = () => {
+    duckElement.className = "duck vertical";
+    const currentX = duckElement.getBoundingClientRect().x;
+    duckElement.style.translate = "calc(" + currentX + "px - 45vw) -120vh";
+    //TODO add fly away Message div 
+    bodyElement.style.backgroundColor = "pink";
+
 }
 
 const dogIntro = () => {
@@ -129,7 +142,7 @@ const dogJump = () => {
 }
 
 const toggleDog = () => {
-    dogElement.style.zIndex = "-1";
+    dogElement.style.zIndex = "5";
 }
 
 const randomInt = (min, max) => {
