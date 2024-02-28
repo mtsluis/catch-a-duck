@@ -28,11 +28,12 @@ body {
 
 /* DOG MOVEMENTS */
 #dog {
-    position: relative;
+    position: absolute;
     top: 80%;
     background: url("imgs/dog-duck-sprite.png") no-repeat 0px -1px;
     transform: scale(3);
     width: 61px;
+    z-index: 1;
 }
 
 .walk {
@@ -132,12 +133,11 @@ body {
     margin-top: 15px;
     margin-left: 19px;
     top: 75%;
-    left: 45%;
+    left: 45vw;
     width: 38px;
     height: 31px;
     transform: scale(2.5);
     transition: translate 1.2s linear;
-    z-index: 0;
 }
 
 #black-duck {

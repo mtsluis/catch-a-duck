@@ -7,8 +7,7 @@ const duckElement = document.getElementsByClassName("duck")[0];
 
 
 window.onload = () => {
-    
-    moveDuck()
+    moveDuck();
     
     //dogIntro();
 }
@@ -19,7 +18,11 @@ duckElement.addEventListener('click', () => {
     checkDuckType(duckElement.id);
     clearInterval(intervalId);
     intervalId = null;
+    setTimeout(() => {
+        duckFall(true);
+    }, 500);
 });
+
 
 //Visual methods
 const moveDuck = () => {
@@ -28,13 +31,12 @@ const moveDuck = () => {
     }
 }
 
-
 const changeDirection = () => {
     if (duckCounter === 6) {
         clearInterval(intervalId);
         intervalId = null;
     }
-    let x = randomInt(-30, 45);
+    let x = randomInt(-40, 45);
     if (duckCounter === 0) {
         duckElement.style.translate = x + 'vw ' + '-50vh';
         duckCounter++;
@@ -47,13 +49,8 @@ const changeDirection = () => {
     duckCounter++;
 }
 
-
-function randomInt(min, max) {
-    let randomNumber = Math.round(Math.random() * (max - min)) + min;
-    return Math.round(randomNumber / 5) * 5;
-}
 const checkDirection = (x, y) => {
-    duckElement.style.rotate = "";
+    duckElement.style.rotate = "0deg";
     duckElement.style.transform = "scale(2.5)";
     if (x > 0 && y > 0) {
         duckElement.style.rotate = "90deg";
@@ -68,6 +65,42 @@ const checkDirection = (x, y) => {
         duckElement.style.transform = "scale(2.5) scaleX(-1)";
         return
     }
+}
+
+const checkDuckType = (duckType, isShot) => {
+    switch (duckType) {
+        case 'blue-duck':
+            if (isShot === true) {
+                duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -38px -236px';
+                break
+            }
+            duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat 0px -236px';
+            break;
+        case 'black-duck':
+            if (isShot === true) {
+                duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -168px -236px';
+                break
+            }
+            duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -130px -236px';
+            break;
+        case 'red-duck':
+            if (isShot === true) {
+                duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -298px -236px';
+                break
+            }
+            duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -260px -236px';
+            break;
+    }
+}
+
+const duckFall = () => {
+    checkDuckType(duckElement.id, true);
+    var rect = duckElement.getBoundingClientRect();
+
+    // the position related to the viewport
+    const x = rect.x;
+    const y = rect.y;
+    duckElement.style.translate = "calc(" + x + "px - 45vw) 15vh";
 }
 
 const dogIntro = () => {
@@ -99,16 +132,7 @@ const toggleDog = () => {
     dogElement.style.zIndex = "-1";
 }
 
-const checkDuckType = (duckType) => {
-    switch (duckType) {
-        case 'blue-duck':
-            duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat 0px -236px';
-            break;
-        case 'black-duck':
-            duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -130px -236px';
-            break;
-        case 'red-duck':
-            duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -260px -236px';
-            break;
-    }
+const randomInt = (min, max) => {
+    let randomNumber = Math.round(Math.random() * (max - min)) + min;
+    return Math.round(randomNumber / 10) * 10;
 }
