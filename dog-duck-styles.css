@@ -23,6 +23,7 @@ body {
     background-image: url("imgs/stage-screen.png");
     background-size: 100% 100%;
     pointer-events: none;
+    z-index: 1;
 }
 
 /* DOG MOVEMENTS */
@@ -130,13 +131,13 @@ body {
     background: url("imgs/dog-duck-sprite.png") no-repeat 0px -119px;
     margin-top: 15px;
     margin-left: 19px;
-    top: 50%;
-    left: 50%;
+    top: 75%;
+    left: 45%;
     width: 38px;
     height: 31px;
     transform: scale(2.5);
-    transition: translate 1.1s linear;
-    z-index: -1;
+    transition: translate 1.2s linear;
+    z-index: 0;
 }
 
 #black-duck {
