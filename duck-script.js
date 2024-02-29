@@ -2,17 +2,100 @@ let intervalId;
 let duckDirectionCounter = 1;
 let duckDirectionInterval = 1000;
 
+let round = 1; //game rounds
+let turns = 0; //number of turns in a round
+let score = 0; //game score
+let bullets = 3;
+let duckDown = 0; //ducks down in a round
+let topScores = 0; //score to increment if score is higher than top score
+let blackDuckScore;
+let blueDuckScore;
+let redDuckScore;
+const ducks = ['red', 'blue', 'black'];
+
+//html elements
 const bodyElement = document.body;
 const dogElement = document.getElementById("dog");
+const roundAlertElement = document.getElementsByClassName("round-alert")[0];
+const perfectScoreAlert = document.getElementsByClassName("perfect-score")[0];
+const flyAwayAlert = document.getElementsByClassName("fly-away")[0];
+const gameOverAlert = document.getElementsByClassName("game-over")[0];
 let duckElement;
 
 
 
-
 window.onload = () => {
+    moveDuck();
     //dogIntro();
 }
 
+//Game logic methods
+function duckScore(ducks, round){ //score for each duck
+
+    if(round <= 5){
+        switch(ducks){
+            case 'black':
+                return blackDuckScore = 500;
+            case 'blue':
+                return blueDuckScore = 1000;
+            case 'red':
+                return redDuckScore = 1500;
+        }
+    } else if(round > 5 && round <= 10){
+        switch(ducks){
+            case 'black':
+                return blackDuckScore = 800;
+            case 'blue':
+                return blueDuckScore = 1600;
+            case 'red':
+                return redDuckScore = 2400;
+        }
+    } else{
+        switch(ducks){
+            case 'black':
+                return blackDuckScore = 1000;
+            case 'blue':
+                return blueDuckScore = 2000;
+            case 'red':
+                return redDuckScore = 3000;
+        }
+    }
+}
+
+function shootTurn(){
+    window.onclick = handleWindowClick;
+}
+
+function handleWindowClick(event) {
+    if (bullets > 0) {
+        bullets--;
+        document.getElementById("currentBullets").innerHTML = bullets;
+        play();
+        
+        if (event.target.nodeName === "IMG") {
+            let duckScoreIncrement = duckScore(event.target.id, round);
+            document.getElementById("ducksDown").innerHTML = "Duck Down: " + (++ duckDown);
+            document.getElementById("score").innerHTML = "Score: " + (score += duckScoreIncrement);
+            event.target.style.display = "none"; 
+        }
+    }
+}
+
+function play() {
+    const audio = document.querySelector('audio');
+    if (audio.paused) {
+        audio.play();
+    }else{
+        audio.currentTime = 0
+    }
+}
+
+
+function topScore(score, topScores){
+    if(score > topScores){
+        topScores = score;
+    } return topScores;
+}
 
 
 //Visual methods
@@ -113,18 +196,21 @@ const duckEscape = () => {
     duckElement.className = "duck vertical";
     const currentX = duckElement.getBoundingClientRect().x;
     duckElement.style.translate = "calc(" + currentX + "px - 45vw) -120vh";
-    //TODO add fly away Message div 
     bodyElement.style.backgroundColor = "pink";
-
+    toggleMessage(flyAwayAlert);
 }
 
 const createDuck = () => {
     const duckDiv = document.createElement('div');
     duckDiv.className = "duck diagonal";
-    //TODO add random color to duck
-    duckDiv.setAttribute("id", "black-duck")
+    duckDiv.setAttribute("id", assignRandomDuck())
     bodyElement.appendChild(duckDiv);
 } 
+
+function assignRandomDuck() {
+    let randomDuck = ducks[Math.floor(Math.random() * ducks.length)];
+    return randomDuck + "-duck";
+}
 
 //Dog
 const dogIntro = () => {
@@ -136,7 +222,7 @@ const dogIntro = () => {
         dogJump();
     }, 4900);
     setTimeout(() => {
-        toggleDog();
+        dogHide();
     }, 9900);    
 }
 
@@ -152,11 +238,16 @@ const dogJump = () => {
     dogElement.className = "jump";
 }
 
-const toggleDog = () => {
+const dogHide = () => {
     dogElement.style.zIndex = "5";
 }
 
 const randomInt = (min, max) => {
     let randomNumber = Math.round(Math.random() * (max - min)) + min;
-    return Math.round(randomNumber / 10) * 10;
+    return Math.round(randomNumber / 15) * 15;
+}
+
+const toggleMessage = (element) => {
+    element.classList.toggle('hidden');
+
 }

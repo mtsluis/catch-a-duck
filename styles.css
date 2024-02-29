@@ -36,8 +36,7 @@ html {
     font-size: 8vmin;
     color: #FFBF00;
     text-align: center;
-    animation: animate  
-                1.5s linear infinite;
+    animation: animate 1.5s linear infinite;
 }
 
 .menu-title h4{
