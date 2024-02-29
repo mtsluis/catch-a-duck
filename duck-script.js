@@ -30,66 +30,53 @@ window.onload = () => {
 }
 
 //Game logic methods
-function duckScore(ducks, round){ //score for each duck
-
-    if(round <= 5){
-        switch(ducks){
-            case 'black':
-                return blackDuckScore = 500;
-            case 'blue':
-                return blueDuckScore = 1000;
-            case 'red':
-                return redDuckScore = 1500;
-        }
-    } else if(round > 5 && round <= 10){
-        switch(ducks){
-            case 'black':
-                return blackDuckScore = 800;
-            case 'blue':
-                return blueDuckScore = 1600;
-            case 'red':
-                return redDuckScore = 2400;
-        }
-    } else{
-        switch(ducks){
-            case 'black':
-                return blackDuckScore = 1000;
-            case 'blue':
-                return blueDuckScore = 2000;
-            case 'red':
-                return redDuckScore = 3000;
-        }
-    }
-}
-
-function shootTurn(){
-    window.onclick = handleWindowClick;
-}
+window.onclick = handleWindowClick;
 
 function handleWindowClick(event) {
     if (bullets > 0) {
         bullets--;
-        document.getElementById("currentBullets").innerHTML = bullets;
+        //TODO create method to remove bullets from UI
         play();
         
-        if (event.target.nodeName === "IMG") {
-            let duckScoreIncrement = duckScore(event.target.id, round);
-            document.getElementById("ducksDown").innerHTML = "Duck Down: " + (++ duckDown);
-            document.getElementById("score").innerHTML = "Score: " + (score += duckScoreIncrement);
-            event.target.style.display = "none"; 
+        if (event.target === duckElement) {
+            let duckScoreIncrement = duckScore(duckElement.id, round);
+            //TODO change ducks to red in UI
+            document.getElementsByClassName("score")[0].innerHTML = score += duckScoreIncrement; 
         }
     }
 }
 
-function play() {
-    const audio = document.querySelector('audio');
-    if (audio.paused) {
-        audio.play();
-    }else{
-        audio.currentTime = 0
+function duckScore(ducks, round){ //score for each duck
+
+    if(round <= 5){
+        switch(ducks){
+            case 'black-duck':
+                return blackDuckScore = 500;
+            case 'blue-duck':
+                return blueDuckScore = 1000;
+            case 'red-duck':
+                return redDuckScore = 1500;
+        }
+    } else if(round > 5 && round <= 10){
+        switch(ducks){
+            case 'black-duck':
+                return blackDuckScore = 800;
+            case 'blue-duck':
+                return blueDuckScore = 1600;
+            case 'red-duck':
+                return redDuckScore = 2400;
+        }
+    } else{
+        switch(ducks){
+            case 'black-duck':
+                return blackDuckScore = 1000;
+            case 'blue-duck':
+                return blueDuckScore = 2000;
+            case 'red-duck':
+                return redDuckScore = 3000;
+        }
     }
 }
-
 
 function topScore(score, topScores){
     if(score > topScores){
@@ -110,7 +97,7 @@ const moveDuck = () => {
 }
 
 const duckAddEvent = (element) => {
-    duckElement.addEventListener('click', () => {
+    duckElement.addEventListener('click', () => {    
         duckElement.className = "duck";
         checkDuckType(duckElement.id);
         clearInterval(intervalId);
@@ -242,12 +229,22 @@ const dogHide = () => {
     dogElement.style.zIndex = "5";
 }
 
+const toggleMessage = (element) => {
+    element.classList.toggle('hidden');
+
+}
+
+//Misc methods
 const randomInt = (min, max) => {
     let randomNumber = Math.round(Math.random() * (max - min)) + min;
     return Math.round(randomNumber / 15) * 15;
 }
 
-const toggleMessage = (element) => {
-    element.classList.toggle('hidden');
-
+function play() {
+    const audio = new Audio("sounds/gun_shot.mp3");
+    if (audio.paused) {
+        audio.play();
+    }else{
+        audio.currentTime = 0
+    }
 }
