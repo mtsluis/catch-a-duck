@@ -228,6 +228,24 @@ body {
     justify-content: center;
 }
 
+.start {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.start > button {
+    transform: scale(3);
+    padding: .5em;
+    background-color: #a7c957;
+    color: white
+
 .hidden {
     display: none;
 }

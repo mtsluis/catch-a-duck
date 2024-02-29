@@ -7,8 +7,15 @@
     <link rel="stylesheet" href="game-styles.css">
     <link rel="stylesheet" href="dog-duck-styles.css">
     <script src="duck-script.js" defer></script>
+    <script src="sounds.js" defer></script>
 </head>
 <body>
+    <div class="start">
+        <audio id="intro-music" controls hidden>
+            <source src="sounds/2_intro.mp3" type="audio/mpeg"> 
+        </audio>
+        <button onclick="introMusic()">START</button>
+    </div>
     <div id="background">
         <div id="display-info">
             <!--<div class="round-alert hidden">ROUND<span class="round-number">1</span></div>-->
