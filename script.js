@@ -101,7 +101,7 @@ let redDuckScore;
 
 let duck = document.getElementById("bird");
 
-const ducks = ['bBlack', 'bBlue', 'bRed'];
+const ducks = ['red', 'blue', 'black'];
 
 let randomDuck = ducks[Math.floor(Math.random() * ducks.length)];
 
@@ -122,35 +122,35 @@ function duckScore(ducks, round){ //score for each duck
 
     if(round <= 5){
         switch(ducks){
-            case 'bBlack':
+            case 'black':
                 return blackDuckScore = 500;
-            case 'bBlue':
+            case 'blue':
                 return blueDuckScore = 1000;
-            case 'bRed':
+            case 'red':
                 return redDuckScore = 1500;
         }
     } else if(round > 5 && round <= 10){
         switch(ducks){
-            case 'bBlack':
+            case 'black':
                 return blackDuckScore = 800;
-            case 'bBlue':
+            case 'blue':
                 return blueDuckScore = 1600;
-            case 'bRed':
+            case 'red':
                 return redDuckScore = 2400;
         }
     } else{
         switch(ducks){
-            case 'bBlack':
+            case 'black':
                 return blackDuckScore = 1000;
-            case 'bBlue':
+            case 'blue':
                 return blueDuckScore = 2000;
-            case 'bRed':
+            case 'red':
                 return redDuckScore = 3000;
         }
     }
 }
 
-
+ 
 function shootTurn(){
     
         window.onclick = handleWindowClick;
