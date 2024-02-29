@@ -1,6 +1,3 @@
-let topScores = 1000;
-document.querySelector('.menu-scores').textContent = topScores;
-
 // Bird animation
 
 const canvas = document.getElementById('canvas');
@@ -90,4 +87,104 @@ window.addEventListener('resize', function(){
     canvas.width = window.innerWidth;
 })
 
+//UI interaction
+
+let round = 1; //game rounds
+let turns = 0; //number of turns in a round
+let score = 0; //game score
+let bullets = 3;
+let duckDown = 0; //ducks down in a round
+let topScores = 0; //score to increment if score is higher than top score
+let blackDuckScore;
+let blueDuckScore;
+let redDuckScore;
+
+let duck = document.getElementById("bird");
+
+const ducks = ['bBlack', 'bBlue', 'bRed'];
+
+let randomDuck = ducks[Math.floor(Math.random() * ducks.length)];
+
+function assignRandomDuck() {
+    let randomDuck = ducks[Math.floor(Math.random() * ducks.length)];
+    duck.id = randomDuck;
+    return randomDuck;
+}
+
+function reset_animation() {
+    var elementAnimation = document.getElementById('bird');
+    elementAnimation.style.animation = 'none';
+    elementAnimation.offsetHeight; 
+    elementAnimation.style.animation = null; 
+  }
+
+function duckScore(ducks, round){ //score for each duck
+
+    if(round <= 5){
+        switch(ducks){
+            case 'bBlack':
+                return blackDuckScore = 500;
+            case 'bBlue':
+                return blueDuckScore = 1000;
+            case 'bRed':
+                return redDuckScore = 1500;
+        }
+    } else if(round > 5 && round <= 10){
+        switch(ducks){
+            case 'bBlack':
+                return blackDuckScore = 800;
+            case 'bBlue':
+                return blueDuckScore = 1600;
+            case 'bRed':
+                return redDuckScore = 2400;
+        }
+    } else{
+        switch(ducks){
+            case 'bBlack':
+                return blackDuckScore = 1000;
+            case 'bBlue':
+                return blueDuckScore = 2000;
+            case 'bRed':
+                return redDuckScore = 3000;
+        }
+    }
+}
+
+
+function shootTurn(){
+    
+        window.onclick = handleWindowClick;
+    }
+
+function handleWindowClick(event) {
+    window.onload = assignRandomDuck();
+    if (bullets > 0) {
+        bullets--;
+        document.getElementById("currentBullets").innerHTML = bullets;
+        play();
+        
+        if (event.target.nodeName === "IMG") {
+            let duckScoreIncrement = duckScore(event.target.id, round);
+            document.getElementById("ducksDown").innerHTML = "Duck Down: " + (++ duckDown);
+            document.getElementById("scores").innerHTML = "Score: " + (score += duckScoreIncrement);
+            event.target.style.display = "none"; 
+        }
+    }
+}
+
+function play() {
+    const audio = document.querySelector('audio');
+    if (audio.paused) {
+        audio.play();
+    }else{
+        audio.currentTime = 0
+    }
+}
+
+
+function topScore(score, topScores){
+    if(score > topScores){
+        topScores = score;
+    } return topScores;
+}
 
