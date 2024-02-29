@@ -14,7 +14,8 @@ body {
     /* justify-content: center; */
     /* align-items: flex-end; */
     background-color: rgb(78, 157, 231);
-}
+}    
+
 
 #background {
     width: 100%;
@@ -23,6 +24,7 @@ body {
     background-image: url("imgs/stage-screen.png");
     background-size: cover;
     position: relative;
+    pointer-events: none;
 }
 
 #game-info {
@@ -119,7 +121,7 @@ body {
     position: relative;
 }
 
-.duck {
+.duck-item {
     content: url(/imgs/white_duck.png);
     grid-row: 1;
     display: flex;
@@ -224,4 +226,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.start {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.start > button {
+    transform: scale(3);
+    padding: .5em;
+    background-color: #a7c957;
+    color: white
 }

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catch a Duck menu</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <script src="sounds.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap" rel="stylesheet">
@@ -13,6 +15,8 @@
 </head>
 <body id="body-menu">
     <div id="main-menu">
+        <audio id="menu-music" controls hidden preload="auto" onload="menuMusic" src="sounds/1_menu.mp3" type="audio/mpeg">
+        </audio>
         <canvas id="canvas"></canvas>
         <div class="menu-title">
             <h1>Catch</h1>
@@ -20,7 +24,14 @@
             <h1 class="h12">Duck</h1>
         </div>
         <div class="player-choices">
-            <p class="p-c">START GAME</p>
+            
+            <p class="p-c" onclick="startGame()">START GAME
+            <audio id="start-game">
+                <source src="sounds/start_game.mp3" type="audio/mpeg">
+            </audio>
+            </p>
+        
+            
         </div>
         <div class="top-scores">
             <p>TOP SCORE:  <span class="menu-scores">changeScore</span></p>
@@ -28,6 +39,5 @@
         <div class="credits">
             <p class="p-credits">Carina, José, Luis - Mindera Code Academy - FrontEnd Project</p></div>
     </div>
-    <script src="script.js" ></script>
 </body>
 </html>

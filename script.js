@@ -90,4 +90,3 @@ window.addEventListener('resize', function(){
     canvas.width = window.innerWidth;
 })
 
-
