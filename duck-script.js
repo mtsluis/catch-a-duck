@@ -2,6 +2,7 @@ let intervalId;
 let duckDirectionCounter = 1;
 let duckDirectionInterval = 1000;
 
+let gamePaused = false;
 let round = 1; //game rounds
 let turns = 0; //number of turns in a round
 let score = 0; //game score
@@ -33,7 +34,7 @@ window.onload = () => {
 window.onclick = handleWindowClick;
 
 function handleWindowClick(event) {
-    if (bullets > 0) {
+    if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
         bullets--;
         //TODO create method to remove bullets from UI
         play();
@@ -240,11 +241,77 @@ const randomInt = (min, max) => {
     return Math.round(randomNumber / 15) * 15;
 }
 
+const audio = new Audio("sounds/gun_shot.mp3");
+
 function play() {
-    const audio = new Audio("sounds/gun_shot.mp3");
-    if (audio.paused) {
+    if (!gamePaused && audio.paused) {
         audio.play();
     }else{
         audio.currentTime = 0
     }
 }
+
+//Pause game
+//Pause
+let paused = false;
+
+const pausediv = document.createElement('div');
+pausediv.className = "pause";
+const pauseParagraph = document.createElement('p');
+const nodePause = document.createTextNode("PAUSE");
+pauseParagraph.appendChild(nodePause);
+pausediv.appendChild(pauseParagraph);
+const buttonResume = document.createElement('button');
+const buttonQuit = document.createElement('button');
+buttonResume.className = "button-resume";
+buttonQuit.className = "button-quit";
+const nodeResume = document.createTextNode("Resume");
+const nodeQuit = document.createTextNode("Quit");
+buttonResume.appendChild(nodeResume);
+buttonQuit.appendChild(nodeQuit);
+pausediv.appendChild(buttonResume);
+pausediv.appendChild(buttonQuit);
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+        if (paused) {
+            unpause();
+            paused = false;
+        } else {
+            pause();
+            paused = true;
+        }
+    }
+});
+
+buttonResume.addEventListener('click', function() {
+    unpause();
+});
+
+buttonQuit.addEventListener('click', function() {
+    window.location.href = "menu.html";
+});
+
+function pause() {
+    const dogDiv = document.getElementById("dog");
+
+    dogDiv.insertAdjacentElement('afterend', pausediv);
+    console.log("Paused");
+    clearInterval(intervalId);
+    intervalId = null;
+
+    audio.pause();
+    gamePaused = true;
+}
+
+function unpause() {
+    pausediv.remove();
+    console.log("Unpaused");
+
+    if (!intervalId) {
+        intervalId = setInterval(changeDirection, duckDirectionInterval);
+    }
+
+    gamePaused = false;
+}
+
