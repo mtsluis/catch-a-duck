@@ -4,36 +4,39 @@ let duckDirectionInterval = 1000;
 
 const bodyElement = document.body;
 const dogElement = document.getElementById("dog");
-const duckElement = document.getElementsByClassName("duck")[0];
+let duckElement;
 
 
 
 
 window.onload = () => {
-    moveDuck();
-    
     //dogIntro();
 }
 
 
-duckElement.addEventListener('click', () => {
-    duckElement.className = "duck";
-    checkDuckType(duckElement.id);
-    clearInterval(intervalId);
-    intervalId = null;
-    setTimeout(() => {
-        duckFall(true);
-    }, 500);
-});
-
 
 //Visual methods
+//Duck
 const moveDuck = () => {
+    createDuck();
+    duckElement = document.getElementsByClassName("duck")[0];
+    duckAddEvent(duckElement);
     if (!intervalId) {
       intervalId = setInterval(changeDirection, duckDirectionInterval);
     }
 }
 
+const duckAddEvent = (element) => {
+    duckElement.addEventListener('click', () => {
+        duckElement.className = "duck";
+        checkDuckType(duckElement.id);
+        clearInterval(intervalId);
+        intervalId = null;
+        setTimeout(() => {
+            duckFall(true);
+        }, 350);
+    });
+} 
 const changeDirection = () => {
     if (duckDirectionCounter === 5) {
         clearInterval(intervalId);
@@ -45,28 +48,27 @@ const changeDirection = () => {
 
     let x = randomInt(-40, 45);
     if (duckDirectionCounter === 0) {
-        duckElement.style.translate = x + 'vw ' + '-50vh';
+        duckElement.style.translate = `${x}vw -50vh`;
         duckDirectionCounter++;
         return
     } 
 
     let y = randomInt(-10, -75);
     checkDirection(x,y);
-    duckElement.style.translate = x + 'vw ' + y + 'vh';
+    duckElement.style.translate = `${x}vw ${y}vh`;
     duckDirectionCounter++;
 }
 
 const checkDirection = (x, y) => {
     //FIXME fix visual direction 
+    const currentX = duckElement.getBoundingClientRect().x;
+    const currentY = duckElement.getBoundingClientRect().y;
     duckElement.style.rotate = "0deg";
     duckElement.style.transform = "scale(2.5)";
-    if (x > 0 && y > 0) {
-        duckElement.style.rotate = "90deg";
-        return
-    }
-    if (x < 0 && y > 0) {
-        duckElement.style.rotate = "90deg";
+    if (x > currentX) {
+        duckElement.className = "duck horizontal";
         duckElement.style.transform = "scale(2.5) scaleY(-1)";
+        
         return
     } 
     if (x < 0 && y < 0) {
@@ -80,21 +82,21 @@ const checkDuckType = (duckType, isShot) => {
         case 'blue-duck':
             if (isShot === true) {
                 duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -38px -236px';
-                break
+                break;
             }
             duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat 0px -236px';
             break;
         case 'black-duck':
             if (isShot === true) {
                 duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -168px -236px';
-                break
+                break;
             }
             duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -130px -236px';
             break;
         case 'red-duck':
             if (isShot === true) {
                 duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -298px -236px';
-                break
+                break;
             }
             duckElement.style.background = 'url("imgs/dog-duck-sprite.png") no-repeat -260px -236px';
             break;
@@ -104,7 +106,7 @@ const checkDuckType = (duckType, isShot) => {
 const duckFall = (isShot) => {
     checkDuckType(duckElement.id, isShot);
     const currentX = duckElement.getBoundingClientRect().x;
-    duckElement.style.translate = "calc(" + currentX + "px - 45vw) 16vh";
+    duckElement.style.translate = `calc(${currentX}px - 45vw) 16vh`;
 }
 
 const duckEscape = () => {
@@ -116,6 +118,15 @@ const duckEscape = () => {
 
 }
 
+const createDuck = () => {
+    const duckDiv = document.createElement('div');
+    duckDiv.className = "duck diagonal";
+    //TODO add random color to duck
+    duckDiv.setAttribute("id", "black-duck")
+    bodyElement.appendChild(duckDiv);
+} 
+
+//Dog
 const dogIntro = () => {
     dogWalk();
     setTimeout(() => {
