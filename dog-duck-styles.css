@@ -1,0 +1,201 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    background-color: rgb(70, 164, 207);
+    z-index: 0;
+    cursor: url("imgs/crosshairs.png") 16 16, auto;
+}
+
+#background {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url("imgs/stage-screen.png");
+    background-size: 100% 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* DOG MOVEMENTS */
+#dog {
+    position: absolute;
+    top: 80%;
+    background: url("imgs/dog-duck-sprite.png") no-repeat 0px -1px;
+    transform: scale(3);
+    width: 61px;
+    z-index: 15;
+}
+
+.walk {
+    margin-left: 15%;
+	height: 43px;
+    animation: 
+    moveRight 3s linear,
+    walkLoop 0.5s steps(3) infinite;
+}
+
+.smell {
+    margin-left: 40%;
+	height: 43px;
+    animation: smell 1s steps(2) infinite;
+}
+
+.jump {
+	height: 48px;
+    margin-left: 40%;
+    animation: jump 5s linear, find-duck 1s steps(2) forwards;
+}
+
+@keyframes walkLoop {
+    from{
+        background-position-x: 0px;
+    }
+    to{
+        background-position-x: -178px;
+    }
+ }
+
+@keyframes moveRight {
+    0% {
+        margin-left: 15%;
+    }
+
+    100% {
+        margin-left: 40%;
+    } 
+}
+
+@keyframes smell {
+    from{
+        background-position-x: -179px;
+    }
+    to{
+        background-position-x: -301px;
+    }
+}
+
+@keyframes find-duck {
+    from{
+        background-position-x: 0px;
+        background-position-y: -59px;
+    }
+    to{
+        background-position-x: -119px;
+        background-position-y: -59px;
+    }
+}
+
+@keyframes jump {
+    10%{
+        top: 80%;
+        margin-left: 40%;
+    } 
+    15%{
+        top: 63%;
+        margin-left: 45%;
+    }
+    65%{
+        top: 63%;
+        margin-left: 46%;
+        transform: scale(3);
+
+    }
+    75%{
+        top: 73%;
+        margin-left: 48%;
+        transform: scale(2.5);
+    }
+    
+    77%{
+        transform: scale(1);
+    }
+    99%{
+        top: 90%;
+        margin-left: 55%;
+        z-index: 5;
+    }
+}
+
+/* DUCK MOVEMENTS */
+.duck {
+    position: absolute;
+    background: url("imgs/dog-duck-sprite.png") no-repeat 0px -119px;
+    margin-top: 15px;
+    margin-left: 19px;
+    top: 75%;
+    left: 45vw;
+    width: 38px;
+    height: 31px;
+    transform: scale(2.5);
+    transition: translate 1.2s linear;
+    z-index: 5;
+}
+
+#black-duck {
+    --sprite-start-x: -130px;
+    --sprite-end-x: -243px;
+}
+
+#blue-duck {
+    --sprite-start-x: 0px;
+    --sprite-end-x: -114px;
+}
+
+#red-duck {
+    --sprite-start-x: -260px;
+    --sprite-end-x: -372px;
+}
+
+.horizontal {
+    animation: fly-horizontal 0.5s steps(3) infinite;
+}
+
+@keyframes fly-horizontal {
+    from{
+        background-position-x: var(--sprite-start-x);
+    }
+    to{
+        background-position-x: var(--sprite-end-x);
+    }
+}
+
+.diagonal {
+    animation: fly-diagonal 0.5s steps(3) infinite;
+}
+
+@keyframes fly-diagonal {
+    from{
+        background-position-x: var(--sprite-start-x);
+        background-position-y: -157px;
+    }
+    to{
+        background-position-x: var(--sprite-end-x);
+        background-position-y: -157px;
+    }
+}
+
+.vertical {
+    animation: fly-vertical 0.5s steps(3) infinite;
+}
+
+@keyframes fly-vertical {
+    from{
+        background-position-x: var(--sprite-start-x);
+        background-position-y: -199px;
+    }
+    to{
+        background-position-x: var(--sprite-end-x);
+        background-position-y: -199px;
+    }
+}
