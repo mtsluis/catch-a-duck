@@ -28,6 +28,7 @@ window.onload = () => {
     //moveDuck();
     //dogIntro();
     dogCatch();
+    //dogLaugh();
 }
 
 //Game logic methods
@@ -235,10 +236,14 @@ const dogHide = () => {
 }
 
 const dogCatch = () => {
-    dogElement.className = "catch"
+    dogElement.className = "catch";
     dogHide();
 }
 
+const dogLaugh = () => {
+    dogElement.className = "laugh";
+    dogHide();
+}
 
 
 //Misc methods

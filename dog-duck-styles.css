@@ -12,8 +12,8 @@
     left: 15%;
 	height: 43px;
     animation: 
-    move-right 3s linear,
-    walk-loop 0.5s steps(3) infinite;
+        move-right 3s linear,
+        walk-loop 0.5s steps(3) infinite;
 }
 
 @keyframes walk-loop {
@@ -64,7 +64,9 @@
 .jump {
 	height: 48px;
     left: 40%;
-    animation: jump 5s linear, find-duck 1s steps(2) forwards;
+    animation:
+        jump 5s linear,
+        find-duck 1s steps(2) forwards;
 }
 
 @keyframes jump {
@@ -87,7 +89,6 @@
         left: 48%;
         transform: scale(2.5);
     }
-    
     77%{
         transform: scale(1);
     }
@@ -102,31 +103,45 @@
     left: 50%;
 	height: 43px;
     background-position-x: -319px !important;
-    animation: catch-duck 1s linear;
+    animation: rising-from-grass 1.2s linear;
 }
 
-@keyframes catch-duck {
+@keyframes rising-from-grass {
     0% {
         top: 75%;
         z-index: 5;
     }
-
     50% {
-        top: 65%;
+        top: 66%;
         z-index: 5;
-
     }
-
     70% {
-        top: 65%;
+        top: 66%;
         z-index: 5;
-
     }
-
     100% {
         top: 75%;
         z-index: 5;
     } 
+}
+
+.laugh {
+    left: 50%;
+	height: 43px;
+    animation: 
+        rising-from-grass 2s linear,
+        laugh 0.5s steps(2) infinite;
+}
+
+@keyframes laugh {
+    from{
+        background-position-x: -179px;
+        background-position-y: -59px;
+    }
+    to{
+        background-position-x: -302px;
+        background-position-y: -59px;
+    }
 }
 
 /* DUCK MOVEMENTS */
