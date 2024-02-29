@@ -25,8 +25,9 @@ let duckElement;
 
 
 window.onload = () => {
-    moveDuck();
+    //moveDuck();
     //dogIntro();
+    dogCatch();
 }
 
 //Game logic methods
@@ -44,6 +45,7 @@ function handleWindowClick(event) {
             document.getElementsByClassName("score")[0].innerHTML = score += duckScoreIncrement; 
         }
     }
+    //BUG bird can still be shot after bullets run out
 }
 
 function duckScore(ducks, round){ //score for each duck
@@ -86,6 +88,9 @@ function topScore(score, topScores){
 
 
 //Visual methods
+const toggleMessage = (element) => {
+    element.classList.toggle('hidden');
+}
 //Duck
 const moveDuck = () => {
     createDuck();
@@ -229,10 +234,12 @@ const dogHide = () => {
     dogElement.style.zIndex = "5";
 }
 
-const toggleMessage = (element) => {
-    element.classList.toggle('hidden');
-
+const dogCatch = () => {
+    dogElement.className = "catch"
+    dogHide();
 }
+
+
 
 //Misc methods
 const randomInt = (min, max) => {

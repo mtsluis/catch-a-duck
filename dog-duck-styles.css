@@ -9,26 +9,14 @@
 }
 
 .walk {
-    margin-left: 15%;
+    left: 15%;
 	height: 43px;
     animation: 
-    moveRight 3s linear,
-    walkLoop 0.5s steps(3) infinite;
+    move-right 3s linear,
+    walk-loop 0.5s steps(3) infinite;
 }
 
-.smell {
-    margin-left: 40%;
-	height: 43px;
-    animation: smell 1s steps(2) infinite;
-}
-
-.jump {
-	height: 48px;
-    margin-left: 40%;
-    animation: jump 5s linear, find-duck 1s steps(2) forwards;
-}
-
-@keyframes walkLoop {
+@keyframes walk-loop {
     from{
         background-position-x: 0px;
     }
@@ -37,14 +25,20 @@
     }
  }
 
-@keyframes moveRight {
+@keyframes move-right {
     0% {
-        margin-left: 15%;
+        left: 15%;
     }
 
     100% {
-        margin-left: 40%;
+        left: 40%;
     } 
+}
+
+.smell {
+    left: 40%;
+	height: 43px;
+    animation: smell 1s steps(2) infinite;
 }
 
 @keyframes smell {
@@ -67,24 +61,30 @@
     }
 }
 
+.jump {
+	height: 48px;
+    left: 40%;
+    animation: jump 5s linear, find-duck 1s steps(2) forwards;
+}
+
 @keyframes jump {
     10%{
         top: 80%;
-        margin-left: 40%;
+        left: 40%;
     } 
     15%{
         top: 63%;
-        margin-left: 45%;
+        left: 45%;
     }
     65%{
         top: 63%;
-        margin-left: 46%;
+        left: 46%;
         transform: scale(3);
 
     }
     75%{
         top: 73%;
-        margin-left: 48%;
+        left: 48%;
         transform: scale(2.5);
     }
     
@@ -93,9 +93,40 @@
     }
     99%{
         top: 90%;
-        margin-left: 55%;
+        left: 55%;
         z-index: 5;
     }
+}
+
+.catch {
+    left: 50%;
+	height: 43px;
+    background-position-x: -319px !important;
+    animation: catch-duck 1s linear;
+}
+
+@keyframes catch-duck {
+    0% {
+        top: 75%;
+        z-index: 5;
+    }
+
+    50% {
+        top: 65%;
+        z-index: 5;
+
+    }
+
+    70% {
+        top: 65%;
+        z-index: 5;
+
+    }
+
+    100% {
+        top: 75%;
+        z-index: 5;
+    } 
 }
 
 /* DUCK MOVEMENTS */
