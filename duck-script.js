@@ -27,8 +27,22 @@ const gameOverAlert = document.getElementsByClassName("game-over")[0];
 const startButtonElement = document.getElementsByClassName("start")[0];
 let duckElement;
 
+
+//WINDOW LOAD
+
+/* ### uncomment to start the game ### */
+
+startButtonElement.addEventListener('click', (event) => {
+    event.stopPropagation();
+    startButtonElement.style.display = "none";
+    dogIntro();
+    setTimeout(() => {
+        playGame();
+    }, 10000);
+    window.onclick = handleWindowClick;
+}); 
+
 //Game logic methods
-window.onclick = handleWindowClick;
 
 function handleWindowClick(event) {
     if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
@@ -36,7 +50,6 @@ function handleWindowClick(event) {
         updateBulletsImgs();
         shotSound();
     }
-    //BUG bird can still be shot after bullets run out
 }
 
 //TODO add perfect round alert
@@ -440,14 +453,3 @@ function unpause() {
 }
 
 
-//WINDOW LOAD
-
-/* ### uncomment to start the game ### */
-
-startButtonElement.addEventListener('click', () => {
-    startButtonElement.style.display = "none";
-    dogIntro();
-    setTimeout(() => {
-        playGame();
-    }, 10000);
-}); 
