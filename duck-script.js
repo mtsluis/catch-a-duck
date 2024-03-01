@@ -24,7 +24,6 @@ const flyAwayAlert = document.getElementsByClassName("fly-away")[0];
 const gameOverAlert = document.getElementsByClassName("game-over")[0];
 let duckElement;
 
-
 //Game logic methods
 window.onclick = handleWindowClick;
 
@@ -96,6 +95,9 @@ const toggleMessage = (element) => {
     element.classList.toggle('hidden');
 }
 
+//Duck
+const flyAndQuackSound = new Audio('sounds/fly_quack.mp3');
+
 const toggleSkyColor = (color) => {
     bodyElement.style.backgroundColor = color;
 }
@@ -114,6 +116,7 @@ const spawnDuck = () => {
     createDuck();
     duckElement = document.getElementsByClassName("duck")[0];
     duckAddEvent(duckElement);
+    flyAndQuackSound.play();
     duckMoveIntervalId = setInterval(changeDirection, duckMoveChangeInterval);
 }
 
@@ -250,6 +253,8 @@ function assignRandomDuck() {
 //Dog
 const dog = document.getElementById('dog');
 const barkSound = document.getElementById('dog-bark');
+const laughSound = new Audio('sounds/dog_laugh.mp3');
+const catchSound = new Audio('sounds/dog_catch_duck.mp3');
 
 const dogIntro = () => {
     dogWalk();
@@ -284,11 +289,15 @@ const dogHide = () => {
 
 const dogCatch = () => {
     dogElement.className = "catch";
+    //sound method
+    catchSound.play();
     dogHide();
 }
 
 const dogLaugh = () => {
     dogElement.className = "laugh";
+    //sound method
+    laughSound.play();
     dogHide();
 }
 
