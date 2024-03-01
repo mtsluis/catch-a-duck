@@ -131,6 +131,13 @@ body {
     flex-direction: column;
 }
 
+.duck-red {
+    content: url(/imgs/red_duck.png);
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 .min-ducks {
     color: skyblue;
     font-size: 10px;
@@ -242,11 +249,12 @@ body {
     bottom: 0;
 }
 
-.start > button {
-    transform: scale(3);
+#start-btn {
+    transform: scale(2);
     padding: .5em;
     background-color: #a7c957;
-    color: white
+    color: white;
+    visibility: visible;
 }
 
 .hidden {
