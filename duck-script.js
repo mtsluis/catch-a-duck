@@ -96,12 +96,13 @@ const toggleMessage = (element) => {
     element.classList.toggle('hidden');
 }
 //Duck
+
 const moveDuck = () => {
     createDuck();
     duckElement = document.getElementsByClassName("duck")[0];
     duckAddEvent(duckElement);
     if (!intervalId) {
-      intervalId = setInterval(changeDirection, duckDirectionInterval);
+        intervalId = setInterval(changeDirection, duckDirectionInterval);
     }
 }
 
@@ -182,10 +183,14 @@ const checkDuckType = (duckType, isShot) => {
     }
 }
 
+const fallSound = new Audio('sounds/dead_duck_fall.mp3');
+
 const duckFall = (isShot) => {
     checkDuckType(duckElement.id, isShot);
     const currentX = duckElement.getBoundingClientRect().x;
     duckElement.style.translate = `calc(${currentX}px - 45vw) 16vh`;
+    //sound method
+    fallSound.play();
 }
 
 const duckEscape = () => {
@@ -209,6 +214,9 @@ function assignRandomDuck() {
 }
 
 //Dog
+const dog = document.getElementById('dog');
+const barkSound = document.getElementById('dog-bark');
+
 const dogIntro = () => {
     dogWalk();
     setTimeout(() => {
@@ -232,6 +240,8 @@ const dogSmell = () => {
 
 const dogJump = () => {
     dogElement.className = "jump";
+    //sound method
+    barkSound.play();
 }
 
 const dogHide = () => {

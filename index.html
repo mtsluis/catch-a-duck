@@ -11,18 +11,24 @@
     <script src="sounds.js" defer></script>
 </head>
 <body>
-    <!-- <div class="start">
+    <div class="start">
         <audio id="intro-music" controls hidden>
             <source src="sounds/2_intro.mp3" type="audio/mpeg"> 
         </audio>
-        <button onclick="introMusic()">START</button>
-    </div> -->
+        <button id="start-btn" onclick="introMusic()">START</button>
+    </div>
     <div id="background">
         <div id="display-info">
-            <!--<div class="round-alert hidden">ROUND<span class="round-number">1</span></div>-->
-            <!--<div class="perfect-score hidden">PERFECT!!</div>-->
-            <div class="fly-away hidden">FLY AWAY</div>
-            <!-- <div class="game-over hidden">GAME OVER</div> -->
+            <div class="round-alert hidden">ROUND<span class="round-number">1</span></div>
+            <div class="perfect-score">PERFECT!!</div>
+            <audio id="perfect-score-sound" controls hidden>
+                <source src="sounds/perfect.mp3" type="audio/mpeg">
+            </audio>
+            <!--<div class="fly-away hidden">FLY AWAY</div>-->
+            <div class="game-over hidden">GAME OVER</div>
+            <audio id="game-over-music" controls hidden>
+                <source src="sounds/game_over.mp3" type="audio/mpeg">
+            </audio>
         </div>
         <div id="game-info">
             <div class="round-container">R=<span class="round-number">1</span></div>
@@ -62,5 +68,8 @@
         </div>
     </div>
     <div id="dog"></div>
+    <audio id="dog-bark" controls hidden>
+        <source src="sounds/3_dog_bark.mp3" type="audio/mpeg">
+    </audio>
 </body>
 </html>
