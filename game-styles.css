@@ -129,6 +129,13 @@ body {
     flex-direction: column;
 }
 
+.duck-red {
+    content: url(/imgs/red_duck.png);
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 .min-ducks {
     color: skyblue;
     font-size: 10px;

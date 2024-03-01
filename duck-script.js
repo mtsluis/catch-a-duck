@@ -38,13 +38,15 @@ window.onclick = handleWindowClick;
 function handleWindowClick(event) {
     if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
         bullets--;
+        updateBulletsImgs();
         //TODO create method to remove bullets from UI
         play();
         
         if (event.target === duckElement) {
             let duckScoreIncrement = duckScore(duckElement.id, round);
-            //TODO change ducks to red in UI
-            document.getElementsByClassName("score")[0].innerHTML = score += duckScoreIncrement; 
+            changeDuckBoardColor();
+            document.getElementsByClassName("score")[0].innerHTML = score += duckScoreIncrement;
+            duckDown++;
         }
     }
     //BUG bird can still be shot after bullets run out
@@ -246,6 +248,37 @@ const dogLaugh = () => {
     dogHide();
 }
 
+//Game HUD
+function updateBulletsImgs(){
+    let bulletsImgs = document.querySelectorAll('.bullets');
+    if(bulletsImgs[bullets]){
+        bulletsImgs[bullets].classList.remove('bullets');
+    }
+}
+
+function resetBullets() {
+    bullets = 3;
+    let bulletsImgs = document.querySelectorAll('.bullets');
+    bulletsImgs.forEach((bulletImg) => {
+        bulletImg.classList.add('bullets');
+    });
+}
+
+function changeDuckBoardColor(){
+    let duckItems = document.querySelectorAll('.duck-item');
+    if (duckItems[duckDown]) {
+        duckItems[duckDown].classList.remove('duck-item');
+        duckItems[duckDown].classList.add('duck-red');
+    }
+}
+
+function resetDuckBoard() {
+    let duckItems = document.querySelectorAll('.duck-red');
+    duckItems.forEach((duckItem) => {
+        duckItem.classList.remove('duck-red');
+        duckItem.classList.add('duck-item');
+    });
+}
 
 //Misc methods
 const randomInt = (min, max) => {
