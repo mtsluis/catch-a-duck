@@ -10,6 +10,7 @@ let score = 0; //game score
 let bullets = 3;
 let ducksSpawned = 0; //ducks spawned in a round
 let ducksShot = 0;
+let ducksToWin = 6;
 let topScores = 0; //score to increment if score is higher than top score
 let blackDuckScore;
 let blueDuckScore;
@@ -82,6 +83,7 @@ function topScore(score, topScores){
 const playRound = () => {
     roundAlertElement.innerHTML = "ROUND " + round;
     toggleMessage(roundAlertElement);
+    ducksShot = 0;
     setTimeout(() => {
         toggleMessage(roundAlertElement);
         spawnDuck();
@@ -92,6 +94,20 @@ const playGame = () => {
     resetDuckBoard();
     playRound();
     round++;
+}
+
+const updateDucksToWin = (nRounds) => {
+    if (nRounds > 19) {
+        ducksToWin = 10;
+    } else if (nRounds > 14) {
+        ducksToWin = 9;
+    } else if (nRounds > 12) {
+        ducksToWin = 8;
+    } else if (nRounds > 10) {
+        ducksToWin = 7;
+    } else if (nRounds > 0) {
+        ducksToWin = 6;
+    }
 }
 
 //Visual methods
@@ -108,6 +124,7 @@ const updateScore = () => {
     score += duckScoreIncrement
     document.getElementsByClassName("score")[0].innerHTML = score;
 }
+
 //Duck
 const spawnDuck = () => {
     toggleSkyColor("rgb(78, 157, 231)");
@@ -184,16 +201,15 @@ const checkDirection = (x, y) => {
     const currentY = duckElement.getBoundingClientRect().y;
     duckElement.style.rotate = "0deg";
     duckElement.style.transform = "scale(3)";
-    /* if (x > currentX) {
+    /* if (x < 0) {
         duckElement.className = "duck horizontal";
         duckElement.style.transform = "scale(3) scaleY(-1)";
-        
         return
-    } 
+    } */ 
     if (x < 0 && y < 0) {
         duckElement.style.transform = "scale(3) scaleX(-1)";
         return
-    } */
+    }
 }
 
 const checkDuckType = (duckType, isShot) => {
@@ -413,10 +429,13 @@ function unpause() {
 
 
 //WINDOW LOAD
-startButtonElement.addEventListener('click', () => {
+
+/* ### uncomment to start the game ### */
+
+/* startButtonElement.addEventListener('click', () => {
     startButtonElement.style.display = "none";
     dogIntro();
     setTimeout(() => {
         playGame();
     }, 10000);
-});
+}); */
