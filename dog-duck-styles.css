@@ -154,6 +154,7 @@
     left: 45vw;
     width: 38px;
     height: 31px;
+    transform: scale(3);
     transition: translate 1.2s linear;
     z-index: 5;
 }
