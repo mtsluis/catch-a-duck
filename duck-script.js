@@ -26,15 +26,17 @@ let duckElement;
 
 
 window.onload = () => {
-    moveDuck();
+    //moveDuck();
     //dogIntro();
+    dogCatch();
+    //dogLaugh();
 }
 
 //Game logic methods
 window.onclick = handleWindowClick;
 
 function handleWindowClick(event) {
-    if (bullets > 0 && !gamePaused && event.target !== buttonResume ) {
+    if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
         bullets--;
         updateBulletsImgs();
         //TODO create method to remove bullets from UI
@@ -47,6 +49,7 @@ function handleWindowClick(event) {
             duckDown++;
         }
     }
+    //BUG bird can still be shot after bullets run out
 }
 
 function duckScore(ducks, round){ //score for each duck
@@ -89,6 +92,9 @@ function topScore(score, topScores){
 
 
 //Visual methods
+const toggleMessage = (element) => {
+    element.classList.toggle('hidden');
+}
 //Duck
 const moveDuck = () => {
     createDuck();
@@ -232,9 +238,14 @@ const dogHide = () => {
     dogElement.style.zIndex = "5";
 }
 
-const toggleMessage = (element) => {
-    element.classList.toggle('hidden');
+const dogCatch = () => {
+    dogElement.className = "catch";
+    dogHide();
+}
 
+const dogLaugh = () => {
+    dogElement.className = "laugh";
+    dogHide();
 }
 
 //Game HUD
@@ -268,7 +279,6 @@ function resetDuckBoard() {
         duckItem.classList.add('duck-item');
     });
 }
-
 
 //Misc methods
 const randomInt = (min, max) => {
