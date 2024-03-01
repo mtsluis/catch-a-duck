@@ -147,7 +147,10 @@ const removeDuck = () => {
 }
 
 const duckAddEvent = (element) => {
-    duckElement.addEventListener('click', () => {    
+    duckElement.addEventListener('click', () => {
+        if (bullets < 1 || gamePaused) {
+            return;
+        }
         duckElement.className = "duck";
         checkDuckType(duckElement.id);
         clearInterval(duckMoveIntervalId);
@@ -441,10 +444,10 @@ function unpause() {
 
 /* ### uncomment to start the game ### */
 
-/* startButtonElement.addEventListener('click', () => {
+startButtonElement.addEventListener('click', () => {
     startButtonElement.style.display = "none";
     dogIntro();
     setTimeout(() => {
         playGame();
     }, 10000);
-}); */
+}); 
