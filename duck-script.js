@@ -23,6 +23,7 @@ const roundAlertElement = document.getElementsByClassName("round-alert")[0];
 const perfectScoreAlert = document.getElementsByClassName("perfect-score")[0];
 const flyAwayAlert = document.getElementsByClassName("fly-away")[0];
 const gameOverAlert = document.getElementsByClassName("game-over")[0];
+const startButtonElement = document.getElementsByClassName("start")[0];
 let duckElement;
 
 
@@ -33,7 +34,7 @@ function handleWindowClick(event) {
     if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
         bullets--;
         updateBulletsImgs();
-        play();
+        shotSound();
     }
     //BUG bird can still be shot after bullets run out
 }
@@ -111,6 +112,7 @@ const updateScore = () => {
 const spawnDuck = () => {
     toggleSkyColor("rgb(78, 157, 231)");
     resetBullets();
+    dogElement.className = "";
     if (ducksSpawned === 10) {
         return
     }
@@ -143,7 +145,7 @@ const duckAddEvent = (element) => {
         }, 2000);
         setTimeout(() => {
             spawnDuck();
-        }, 3000);
+        }, 3500);
     });
 } 
 const changeDirection = () => {
@@ -337,7 +339,7 @@ const randomInt = (min, max) => {
 
 const audio = new Audio("sounds/gun_shot.mp3");
 
-function play() {
+function shotSound() {
     if (!gamePaused && audio.paused) {
         audio.play();
     }else{
@@ -409,9 +411,12 @@ function unpause() {
     gamePaused = false;
 }
 
+
 //WINDOW LOAD
-/* dogIntro();
-setTimeout(() => {
-    playGame();
-}, 10000); */
-playGame();
+startButtonElement.addEventListener('click', () => {
+    startButtonElement.style.display = "none";
+    dogIntro();
+    setTimeout(() => {
+        playGame();
+    }, 10000);
+});
