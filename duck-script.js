@@ -362,8 +362,6 @@ function unpause() {
     gamePaused = false;
 }
 
-
-
 //WINDOW LOAD
 dogIntro();
 setTimeout(() => {
