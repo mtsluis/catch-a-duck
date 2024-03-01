@@ -8,7 +8,8 @@ let round = 1; //game rounds
 let turns = 0; //number of turns in a round
 let score = 0; //game score
 let bullets = 3;
-let duckCount = 0; //ducks spawned in a round
+let ducksSpawned = 0; //ducks spawned in a round
+let ducksShot = 0;
 let topScores = 0; //score to increment if score is higher than top score
 let blackDuckScore;
 let blueDuckScore;
@@ -40,7 +41,7 @@ function handleWindowClick(event) {
 //TODO add perfect round alert
 //TODO add game over logic and screen
 
-function duckScore(ducks, round){ //score for each duck
+function duckScore(ducks, round) { //score for each duck
     if(round <= 5){
         switch(ducks){
             case 'black-duck':
@@ -87,6 +88,7 @@ const playRound = () => {
 }
 
 const playGame = () => {
+    resetDuckBoard();
     playRound();
     round++;
 }
@@ -107,8 +109,9 @@ const updateScore = () => {
 }
 //Duck
 const spawnDuck = () => {
-    toggleSkyColor("rgb(78, 157, 231)")
-    if (duckCount === 10) {
+    toggleSkyColor("rgb(78, 157, 231)");
+    resetBullets();
+    if (ducksSpawned === 10) {
         return
     }
     createDuck();
@@ -128,8 +131,8 @@ const duckAddEvent = (element) => {
         clearInterval(duckMoveIntervalId);
         changeDuckBoardColor();
         updateScore();
-        //FIXME check conflict with window event to prevent duplicate count
-        duckCount++;
+        ducksSpawned++;
+        ducksShot++;
         setTimeout(() => {
             duckFall(true);
         }, 350);
@@ -150,7 +153,7 @@ const changeDirection = () => {
         setTimeout(() => {
             duckEscape();
             dogLaugh();
-            duckCount++;
+            ducksSpawned++;
             duckDirectionCounter = 0;
         }, duckMoveChangeInterval);
         setTimeout(() => {
@@ -179,7 +182,7 @@ const checkDirection = (x, y) => {
     const currentY = duckElement.getBoundingClientRect().y;
     duckElement.style.rotate = "0deg";
     duckElement.style.transform = "scale(3)";
-    if (x > currentX) {
+    /* if (x > currentX) {
         duckElement.className = "duck horizontal";
         duckElement.style.transform = "scale(3) scaleY(-1)";
         
@@ -188,7 +191,7 @@ const checkDirection = (x, y) => {
     if (x < 0 && y < 0) {
         duckElement.style.transform = "scale(3) scaleX(-1)";
         return
-    }
+    } */
 }
 
 const checkDuckType = (duckType, isShot) => {
@@ -302,17 +305,19 @@ function updateBulletsImgs(){
 
 function resetBullets() {
     bullets = 3;
-    let bulletsImgs = document.querySelectorAll('.bullets');
-    bulletsImgs.forEach((bulletImg) => {
-        bulletImg.classList.add('bullets');
+    let bulletDivElement = document.querySelector('.shot-container').children;
+    Array.from(bulletDivElement).forEach((bulletImg) => {
+        if (bulletImg.className === "") {
+            bulletImg.classList.add('bullets');
+        }
     });
 }
 
 function changeDuckBoardColor(){
     let duckItems = document.querySelectorAll('.duck-item');
-    if (duckItems[duckCount]) {
-        duckItems[duckCount].classList.remove('duck-item');
-        duckItems[duckCount].classList.add('duck-red');
+    if (duckItems[ducksSpawned]) {
+        //duckItems[ducksSpawned].classList.remove('duck-item');
+        duckItems[ducksSpawned].classList.add('duck-red');
     }
 }
 
@@ -320,7 +325,7 @@ function resetDuckBoard() {
     let duckItems = document.querySelectorAll('.duck-red');
     duckItems.forEach((duckItem) => {
         duckItem.classList.remove('duck-red');
-        duckItem.classList.add('duck-item');
+        //duckItem.classList.add('duck-item');
     });
 }
 
