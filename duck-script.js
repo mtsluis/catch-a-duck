@@ -126,6 +126,7 @@ const duckAddEvent = (element) => {
         duckElement.className = "duck";
         checkDuckType(duckElement.id);
         clearInterval(duckMoveIntervalId);
+        changeDuckBoardColor();
         updateScore();
         //FIXME check conflict with window event to prevent duplicate count
         duckCount++;
@@ -309,9 +310,9 @@ function resetBullets() {
 
 function changeDuckBoardColor(){
     let duckItems = document.querySelectorAll('.duck-item');
-    if (duckItems[duckDown]) {
-        duckItems[duckDown].classList.remove('duck-item');
-        duckItems[duckDown].classList.add('duck-red');
+    if (duckItems[duckCount]) {
+        duckItems[duckCount].classList.remove('duck-item');
+        duckItems[duckCount].classList.add('duck-red');
     }
 }
 
@@ -404,7 +405,8 @@ function unpause() {
 }
 
 //WINDOW LOAD
-dogIntro();
+/* dogIntro();
 setTimeout(() => {
     playGame();
-}, 10000);
+}, 10000); */
+playGame();
