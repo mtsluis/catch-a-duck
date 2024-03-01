@@ -70,15 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // dog barking -> duck-script
-
-//duck sound
-/*const quackSound = new Audio('sounds/4_duck_quack.mp3');
-quackSound.play();*/
- 
- 
-
-//fly sound
-
-// shot sound
-
 // dead duck fall -> duck-script
+// shot sound -> duck-script
+// dogLaugh -> duck-script
+//fly and quack sound -> duck-script
+
+
+

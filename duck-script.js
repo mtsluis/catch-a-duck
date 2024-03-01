@@ -26,9 +26,9 @@ let duckElement;
 
 
 window.onload = () => {
-    //moveDuck();
+    moveDuck();
     //dogIntro();
-    dogCatch();
+    //dogCatch();
     //dogLaugh();
 }
 
@@ -96,11 +96,13 @@ const toggleMessage = (element) => {
     element.classList.toggle('hidden');
 }
 //Duck
+const flyAndQuackSound = new Audio('sounds/fly_quack.mp3');
 
 const moveDuck = () => {
     createDuck();
     duckElement = document.getElementsByClassName("duck")[0];
     duckAddEvent(duckElement);
+    flyAndQuackSound.play();
     if (!intervalId) {
         intervalId = setInterval(changeDirection, duckDirectionInterval);
     }
@@ -216,6 +218,8 @@ function assignRandomDuck() {
 //Dog
 const dog = document.getElementById('dog');
 const barkSound = document.getElementById('dog-bark');
+const laughSound = new Audio('sounds/dog_laugh.mp3');
+const catchSound = new Audio('sounds/dog_catch_duck.mp3');
 
 const dogIntro = () => {
     dogWalk();
@@ -250,11 +254,15 @@ const dogHide = () => {
 
 const dogCatch = () => {
     dogElement.className = "catch";
+    //sound method
+    catchSound.play();
     dogHide();
 }
 
 const dogLaugh = () => {
     dogElement.className = "laugh";
+    //sound method
+    laughSound.play();
     dogHide();
 }
 

@@ -86,3 +86,28 @@ window.addEventListener('resize', function(){
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 })
+
+//update topscore
+function getTopScore() {
+    let topScore = localStorage.getItem(score);
+    return topScore ? parseInt(topScore) : 0;
+}
+
+function updateTopScore(newScore) {
+    let topScore = getTopScore();
+    if(newScore > topScore) {
+        topScore = newScore;
+        localStorage.setItem('topScore', topScore);
+
+    }
+    document.getElementById('menu-scores').textContent = getTopScore();
+}
+
+function updateScore(newScore) {
+    score = newScore;
+    updateTopScore(newScore);
+}
+
+window.onload = function() {
+    document.getElementById('menu-scores').textContent = getTopScore();
+}
