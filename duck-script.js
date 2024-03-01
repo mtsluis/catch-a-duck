@@ -358,9 +358,9 @@ function resetBullets() {
 
 function changeDuckBoardColor(){
     let duckItems = document.querySelectorAll('.duck-item');
-    if (duckItems[ducksSpawned]) {
+    if (duckItems[ducksShot]) {
         //duckItems[ducksSpawned].classList.remove('duck-item');
-        duckItems[ducksSpawned].classList.add('duck-red');
+        duckItems[ducksShot].classList.add('duck-red');
     }
 }
 
