@@ -100,7 +100,7 @@
 }
 
 .catch {
-    left: 50%;
+    left: 48%;
 	height: 43px;
     background-position-x: -319px !important;
     animation: rising-from-grass 1.2s linear;
@@ -126,7 +126,7 @@
 }
 
 .laugh {
-    left: 50%;
+    left: 48%;
 	height: 43px;
     animation: 
         rising-from-grass 2s linear,
@@ -154,7 +154,6 @@
     left: 45vw;
     width: 38px;
     height: 31px;
-    transform: scale(2.5);
     transition: translate 1.2s linear;
     z-index: 5;
 }
