@@ -1,13 +1,14 @@
-let intervalId;
+let duckMoveIntervalId;
+let roundIntervalId;
 let duckDirectionCounter = 1;
-let duckDirectionInterval = 1000;
+let duckMoveChangeInterval = 1000;
 
 let gamePaused = false;
 let round = 1; //game rounds
 let turns = 0; //number of turns in a round
 let score = 0; //game score
 let bullets = 3;
-let duckDown = 0; //ducks down in a round
+let duckCount = 0; //ducks spawned in a round
 let topScores = 0; //score to increment if score is higher than top score
 let blackDuckScore;
 let blueDuckScore;
@@ -24,14 +25,6 @@ const gameOverAlert = document.getElementsByClassName("game-over")[0];
 let duckElement;
 
 
-
-window.onload = () => {
-    //moveDuck();
-    //dogIntro();
-    dogCatch();
-    //dogLaugh();
-}
-
 //Game logic methods
 window.onclick = handleWindowClick;
 
@@ -39,21 +32,15 @@ function handleWindowClick(event) {
     if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
         bullets--;
         updateBulletsImgs();
-        //TODO create method to remove bullets from UI
         play();
-        
-        if (event.target === duckElement) {
-            let duckScoreIncrement = duckScore(duckElement.id, round);
-            changeDuckBoardColor();
-            document.getElementsByClassName("score")[0].innerHTML = score += duckScoreIncrement;
-            duckDown++;
-        }
     }
     //BUG bird can still be shot after bullets run out
 }
 
-function duckScore(ducks, round){ //score for each duck
+//TODO add perfect round alert
+//TODO add game over logic and screen
 
+function duckScore(ducks, round){ //score for each duck
     if(round <= 5){
         switch(ducks){
             case 'black-duck':
@@ -90,50 +77,96 @@ function topScore(score, topScores){
     } return topScores;
 }
 
+const playRound = () => {
+    roundAlertElement.innerHTML = "ROUND " + round;
+    toggleMessage(roundAlertElement);
+    setTimeout(() => {
+        toggleMessage(roundAlertElement);
+        spawnDuck();
+    }, 1000);
+}
+
+const playGame = () => {
+    playRound();
+    round++;
+}
 
 //Visual methods
 const toggleMessage = (element) => {
     element.classList.toggle('hidden');
 }
-//Duck
 
-const moveDuck = () => {
+const toggleSkyColor = (color) => {
+    bodyElement.style.backgroundColor = color;
+}
+
+const updateScore = () => {
+    let duckScoreIncrement = duckScore(duckElement.id, round);
+    score += duckScoreIncrement
+    document.getElementsByClassName("score")[0].innerHTML = score;
+}
+//Duck
+const spawnDuck = () => {
+    toggleSkyColor("rgb(78, 157, 231)")
+    if (duckCount === 10) {
+        return
+    }
     createDuck();
     duckElement = document.getElementsByClassName("duck")[0];
     duckAddEvent(duckElement);
-    if (!intervalId) {
-        intervalId = setInterval(changeDirection, duckDirectionInterval);
-    }
+    duckMoveIntervalId = setInterval(changeDirection, duckMoveChangeInterval);
+}
+
+const removeDuck = () => {
+    bodyElement.removeChild(duckElement);
 }
 
 const duckAddEvent = (element) => {
     duckElement.addEventListener('click', () => {    
         duckElement.className = "duck";
         checkDuckType(duckElement.id);
-        clearInterval(intervalId);
-        intervalId = null;
+        clearInterval(duckMoveIntervalId);
+        updateScore();
+        //FIXME check conflict with window event to prevent duplicate count
+        duckCount++;
         setTimeout(() => {
             duckFall(true);
         }, 350);
+        setTimeout(() => {
+            duckDirectionCounter = 0;
+            dogCatch();
+            removeDuck();
+        }, 2000);
+        setTimeout(() => {
+            spawnDuck();
+        }, 3000);
     });
 } 
 const changeDirection = () => {
     if (duckDirectionCounter === 5) {
-        clearInterval(intervalId);
-        intervalId = null;
+        clearInterval(duckMoveIntervalId);
+        duckMoveIntervalId = null;
         setTimeout(() => {
             duckEscape();
-        }, duckDirectionInterval);
+            dogLaugh();
+            duckCount++;
+            duckDirectionCounter = 0;
+        }, duckMoveChangeInterval);
+        setTimeout(() => {
+            removeDuck();
+            toggleMessage(flyAwayAlert);
+            spawnDuck();
+        }, 3500);
     }
 
-    let x = randomInt(-40, 45);
+    const x = randomInt(-40, 45);
     if (duckDirectionCounter === 0) {
         duckElement.style.translate = `${x}vw -50vh`;
         duckDirectionCounter++;
         return
     } 
 
-    let y = randomInt(-10, -75);
+    const y = randomInt(-10, -75);
     checkDirection(x,y);
     duckElement.style.translate = `${x}vw ${y}vh`;
     duckDirectionCounter++;
@@ -144,15 +177,15 @@ const checkDirection = (x, y) => {
     const currentX = duckElement.getBoundingClientRect().x;
     const currentY = duckElement.getBoundingClientRect().y;
     duckElement.style.rotate = "0deg";
-    duckElement.style.transform = "scale(2.5)";
+    duckElement.style.transform = "scale(3)";
     if (x > currentX) {
         duckElement.className = "duck horizontal";
-        duckElement.style.transform = "scale(2.5) scaleY(-1)";
+        duckElement.style.transform = "scale(3) scaleY(-1)";
         
         return
     } 
     if (x < 0 && y < 0) {
-        duckElement.style.transform = "scale(2.5) scaleX(-1)";
+        duckElement.style.transform = "scale(3) scaleX(-1)";
         return
     }
 }
@@ -197,7 +230,7 @@ const duckEscape = () => {
     duckElement.className = "duck vertical";
     const currentX = duckElement.getBoundingClientRect().x;
     duckElement.style.translate = "calc(" + currentX + "px - 45vw) -120vh";
-    bodyElement.style.backgroundColor = "pink";
+    toggleSkyColor("pink");
     toggleMessage(flyAwayAlert);
 }
 
@@ -352,8 +385,8 @@ function pause() {
 
     dogDiv.insertAdjacentElement('afterend', pausediv);
     console.log("Paused");
-    clearInterval(intervalId);
-    intervalId = null;
+    clearInterval(duckMoveIntervalId);
+    duckMoveIntervalId = null;
 
     audio.pause();
     gamePaused = true;
@@ -363,10 +396,15 @@ function unpause() {
     pausediv.remove();
     console.log("Unpaused");
 
-    if (!intervalId) {
-        intervalId = setInterval(changeDirection, duckDirectionInterval);
+    if (!duckMoveIntervalId) {
+        duckMoveIntervalId = setInterval(changeDirection, duckMoveChangeInterval);
     }
 
     gamePaused = false;
 }
 
+//WINDOW LOAD
+dogIntro();
+setTimeout(() => {
+    playGame();
+}, 10000);
