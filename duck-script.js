@@ -31,9 +31,9 @@ window.onclick = handleWindowClick;
 function handleWindowClick(event) {
     if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
         bullets--;
+        updateBulletsImgs();
         play();
     }
-    //BUG bird can still be shot after bullets run out
 }
 
 //TODO add perfect round alert
@@ -215,10 +215,14 @@ const checkDuckType = (duckType, isShot) => {
     }
 }
 
+const fallSound = new Audio('sounds/dead_duck_fall.mp3');
+
 const duckFall = (isShot) => {
     checkDuckType(duckElement.id, isShot);
     const currentX = duckElement.getBoundingClientRect().x;
     duckElement.style.translate = `calc(${currentX}px - 45vw) 16vh`;
+    //sound method
+    fallSound.play();
 }
 
 const duckEscape = () => {
@@ -242,6 +246,9 @@ function assignRandomDuck() {
 }
 
 //Dog
+const dog = document.getElementById('dog');
+const barkSound = document.getElementById('dog-bark');
+
 const dogIntro = () => {
     dogWalk();
     setTimeout(() => {
@@ -265,6 +272,8 @@ const dogSmell = () => {
 
 const dogJump = () => {
     dogElement.className = "jump";
+    //sound method
+    barkSound.play();
 }
 
 const dogHide = () => {
@@ -281,6 +290,37 @@ const dogLaugh = () => {
     dogHide();
 }
 
+//Game HUD
+function updateBulletsImgs(){
+    let bulletsImgs = document.querySelectorAll('.bullets');
+    if(bulletsImgs[bullets]){
+        bulletsImgs[bullets].classList.remove('bullets');
+    }
+}
+
+function resetBullets() {
+    bullets = 3;
+    let bulletsImgs = document.querySelectorAll('.bullets');
+    bulletsImgs.forEach((bulletImg) => {
+        bulletImg.classList.add('bullets');
+    });
+}
+
+function changeDuckBoardColor(){
+    let duckItems = document.querySelectorAll('.duck-item');
+    if (duckItems[duckDown]) {
+        duckItems[duckDown].classList.remove('duck-item');
+        duckItems[duckDown].classList.add('duck-red');
+    }
+}
+
+function resetDuckBoard() {
+    let duckItems = document.querySelectorAll('.duck-red');
+    duckItems.forEach((duckItem) => {
+        duckItem.classList.remove('duck-red');
+        duckItem.classList.add('duck-item');
+    });
+}
 
 //Misc methods
 const randomInt = (min, max) => {
