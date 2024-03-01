@@ -96,6 +96,7 @@ const playRound = () => {
     roundAlertElement.innerHTML = "ROUND " + round;
     toggleMessage(roundAlertElement);
     ducksShot = 0;
+    updateDucksToWin(round);
     setTimeout(() => {
         toggleMessage(roundAlertElement);
         spawnDuck();
@@ -111,16 +112,32 @@ const playGame = () => {
 const updateDucksToWin = (nRounds) => {
     if (nRounds > 19) {
         ducksToWin = 10;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 14) {
         ducksToWin = 9;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 12) {
         ducksToWin = 8;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 10) {
         ducksToWin = 7;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 0) {
         ducksToWin = 6;
+        selectDuckstoWin(ducksToWin);
     }
 }
+
+function selectDuckstoWin(ducksToWin){
+    let minDucks = document.querySelectorAll('.min-ducks');
+    for (let i = 0; i < minDucks.length - ducksToWin; i++) {
+        if (minDucks[i]) {
+            minDucks[i].remove();
+        }
+    }
+}
+
+
 
 //Visual methods
 const toggleMessage = (element) => {
