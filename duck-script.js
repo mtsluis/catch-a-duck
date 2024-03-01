@@ -8,7 +8,9 @@ let round = 1; //game rounds
 let turns = 0; //number of turns in a round
 let score = 0; //game score
 let bullets = 3;
-let duckCount = 0; //ducks spawned in a round
+let ducksSpawned = 0; //ducks spawned in a round
+let ducksShot = 0;
+let ducksToWin = 6;
 let topScores = 0; //score to increment if score is higher than top score
 let blackDuckScore;
 let blueDuckScore;
@@ -22,6 +24,7 @@ const roundAlertElement = document.getElementsByClassName("round-alert")[0];
 const perfectScoreAlert = document.getElementsByClassName("perfect-score")[0];
 const flyAwayAlert = document.getElementsByClassName("fly-away")[0];
 const gameOverAlert = document.getElementsByClassName("game-over")[0];
+const startButtonElement = document.getElementsByClassName("start")[0];
 let duckElement;
 
 //Game logic methods
@@ -31,7 +34,7 @@ function handleWindowClick(event) {
     if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
         bullets--;
         updateBulletsImgs();
-        play();
+        shotSound();
     }
     //BUG bird can still be shot after bullets run out
 }
@@ -39,7 +42,7 @@ function handleWindowClick(event) {
 //TODO add perfect round alert
 //TODO add game over logic and screen
 
-function duckScore(ducks, round){ //score for each duck
+function duckScore(ducks, round) { //score for each duck
     if(round <= 5){
         switch(ducks){
             case 'black-duck':
@@ -79,6 +82,7 @@ function topScore(score, topScores){
 const playRound = () => {
     roundAlertElement.innerHTML = "ROUND " + round;
     toggleMessage(roundAlertElement);
+    ducksShot = 0;
     setTimeout(() => {
         toggleMessage(roundAlertElement);
         spawnDuck();
@@ -86,8 +90,23 @@ const playRound = () => {
 }
 
 const playGame = () => {
+    resetDuckBoard();
     playRound();
     round++;
+}
+
+const updateDucksToWin = (nRounds) => {
+    if (nRounds > 19) {
+        ducksToWin = 10;
+    } else if (nRounds > 14) {
+        ducksToWin = 9;
+    } else if (nRounds > 12) {
+        ducksToWin = 8;
+    } else if (nRounds > 10) {
+        ducksToWin = 7;
+    } else if (nRounds > 0) {
+        ducksToWin = 6;
+    }
 }
 
 //Visual methods
@@ -107,10 +126,13 @@ const updateScore = () => {
     score += duckScoreIncrement
     document.getElementsByClassName("score")[0].innerHTML = score;
 }
+
 //Duck
 const spawnDuck = () => {
-    toggleSkyColor("rgb(78, 157, 231)")
-    if (duckCount === 10) {
+    toggleSkyColor("rgb(78, 157, 231)");
+    resetBullets();
+    dogElement.className = "";
+    if (ducksSpawned === 10) {
         return
     }
     createDuck();
@@ -131,8 +153,8 @@ const duckAddEvent = (element) => {
         clearInterval(duckMoveIntervalId);
         changeDuckBoardColor();
         updateScore();
-        //FIXME check conflict with window event to prevent duplicate count
-        duckCount++;
+        ducksSpawned++;
+        ducksShot++;
         setTimeout(() => {
             duckFall(true);
         }, 350);
@@ -143,7 +165,7 @@ const duckAddEvent = (element) => {
         }, 2000);
         setTimeout(() => {
             spawnDuck();
-        }, 3000);
+        }, 3500);
     });
 } 
 const changeDirection = () => {
@@ -153,7 +175,7 @@ const changeDirection = () => {
         setTimeout(() => {
             duckEscape();
             dogLaugh();
-            duckCount++;
+            ducksSpawned++;
             duckDirectionCounter = 0;
         }, duckMoveChangeInterval);
         setTimeout(() => {
@@ -182,12 +204,11 @@ const checkDirection = (x, y) => {
     const currentY = duckElement.getBoundingClientRect().y;
     duckElement.style.rotate = "0deg";
     duckElement.style.transform = "scale(3)";
-    if (x > currentX) {
+    /* if (x < 0) {
         duckElement.className = "duck horizontal";
         duckElement.style.transform = "scale(3) scaleY(-1)";
-        
         return
-    } 
+    } */ 
     if (x < 0 && y < 0) {
         duckElement.style.transform = "scale(3) scaleX(-1)";
         return
@@ -311,17 +332,19 @@ function updateBulletsImgs(){
 
 function resetBullets() {
     bullets = 3;
-    let bulletsImgs = document.querySelectorAll('.bullets');
-    bulletsImgs.forEach((bulletImg) => {
-        bulletImg.classList.add('bullets');
+    let bulletDivElement = document.querySelector('.shot-container').children;
+    Array.from(bulletDivElement).forEach((bulletImg) => {
+        if (bulletImg.className === "") {
+            bulletImg.classList.add('bullets');
+        }
     });
 }
 
 function changeDuckBoardColor(){
     let duckItems = document.querySelectorAll('.duck-item');
-    if (duckItems[duckCount]) {
-        duckItems[duckCount].classList.remove('duck-item');
-        duckItems[duckCount].classList.add('duck-red');
+    if (duckItems[ducksSpawned]) {
+        //duckItems[ducksSpawned].classList.remove('duck-item');
+        duckItems[ducksSpawned].classList.add('duck-red');
     }
 }
 
@@ -329,7 +352,7 @@ function resetDuckBoard() {
     let duckItems = document.querySelectorAll('.duck-red');
     duckItems.forEach((duckItem) => {
         duckItem.classList.remove('duck-red');
-        duckItem.classList.add('duck-item');
+        //duckItem.classList.add('duck-item');
     });
 }
 
@@ -341,7 +364,7 @@ const randomInt = (min, max) => {
 
 const audio = new Audio("sounds/gun_shot.mp3");
 
-function play() {
+function shotSound() {
     if (!gamePaused && audio.paused) {
         audio.play();
     }else{
@@ -413,9 +436,15 @@ function unpause() {
     gamePaused = false;
 }
 
+
 //WINDOW LOAD
-/* dogIntro();
-setTimeout(() => {
-    playGame();
-}, 10000); */
-playGame();
+
+/* ### uncomment to start the game ### */
+
+/* startButtonElement.addEventListener('click', () => {
+    startButtonElement.style.display = "none";
+    dogIntro();
+    setTimeout(() => {
+        playGame();
+    }, 10000);
+}); */
