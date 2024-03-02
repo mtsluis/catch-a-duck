@@ -25,6 +25,7 @@ const perfectScoreAlert = document.getElementsByClassName("perfect-score")[0];
 const flyAwayAlert = document.getElementsByClassName("fly-away")[0];
 const gameOverAlert = document.getElementsByClassName("game-over")[0];
 const startButtonElement = document.getElementsByClassName("start")[0];
+const roundPanelElement = document.getElementsByClassName("round-container")[0];
 let duckElement;
 
 //Game logic methods
@@ -80,19 +81,28 @@ function topScore(score, topScores){
 }
 
 const playRound = () => {
+    if (ducksShot < ducksSpawned) {
+        toggleMessage(gameOverAlert);
+        dogLaugh();
+        setTimeout(() => {
+        window.location.href = "menu.html";    
+        }, 3500);
+    }
     roundAlertElement.innerHTML = "ROUND " + round;
     toggleMessage(roundAlertElement);
+    updateRound();
+    ducksSpawned = 0;
     ducksShot = 0;
+    resetDuckBoard();
+    updateDucksToWin(round)
     setTimeout(() => {
         toggleMessage(roundAlertElement);
         spawnDuck();
-    }, 1000);
+    }, 2000);
 }
 
 const playGame = () => {
-    resetDuckBoard();
     playRound();
-    round++;
 }
 
 const updateDucksToWin = (nRounds) => {
@@ -127,12 +137,18 @@ const updateScore = () => {
     document.getElementsByClassName("score")[0].innerHTML = score;
 }
 
+const updateRound = () => {
+    roundPanelElement.innerHTML = `R${round}`;
+}
+
 //Duck
 const spawnDuck = () => {
     toggleSkyColor("rgb(78, 157, 231)");
     resetBullets();
     dogElement.className = "";
     if (ducksSpawned === 10) {
+        round++;
+        playRound();
         return
     }
     createDuck();
@@ -343,7 +359,6 @@ function resetBullets() {
 function changeDuckBoardColor(){
     let duckItems = document.querySelectorAll('.duck-item');
     if (duckItems[ducksSpawned]) {
-        //duckItems[ducksSpawned].classList.remove('duck-item');
         duckItems[ducksSpawned].classList.add('duck-red');
     }
 }
@@ -352,7 +367,6 @@ function resetDuckBoard() {
     let duckItems = document.querySelectorAll('.duck-red');
     duckItems.forEach((duckItem) => {
         duckItem.classList.remove('duck-red');
-        //duckItem.classList.add('duck-item');
     });
 }
 
@@ -438,8 +452,7 @@ function unpause() {
 
 
 //WINDOW LOAD
-
-/* ### uncomment to start the game ### */
+/* ### uncomment below to start the game ### */
 
 /* startButtonElement.addEventListener('click', () => {
     startButtonElement.style.display = "none";
