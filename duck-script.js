@@ -87,6 +87,7 @@ const playRound = () => {
         setTimeout(() => {
         window.location.href = "menu.html";    
         }, 3500);
+        return
     }
     roundAlertElement.innerHTML = "ROUND " + round;
     toggleMessage(roundAlertElement);
