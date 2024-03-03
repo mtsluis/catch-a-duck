@@ -9,7 +9,7 @@ let turns = 0; //number of turns in a round
 let score = 0; //game score
 let bullets = 3;
 let ducksSpawned = 0; //ducks spawned in a round
-let ducksShot = 0;
+let ducksShot = 10;
 let ducksToWin = 6;
 let topScores = 0; //score to increment if score is higher than top score
 let blackDuckScore;
@@ -94,7 +94,7 @@ function topScore(score, topScores){
 }
 
 const playRound = () => {
-    if (ducksShot < ducksSpawned) {
+    if (ducksShot < ducksToWin) {
         toggleMessage(gameOverAlert);
         dogLaugh();
         setTimeout(() => {
@@ -336,7 +336,7 @@ const dogIntro = () => {
     }, 4900);
     setTimeout(() => {
         dogHide();
-    }, 9900);    
+    }, 9500);    
 }
 
 const dogWalk = () => {
