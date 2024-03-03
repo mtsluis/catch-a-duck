@@ -33,17 +33,21 @@ function introMusic() {
 document.addEventListener('DOMContentLoaded', function() {
     const gameOver = document.querySelector('.game-over');
     const music = document.getElementById('game-over-music');
-    
+    const failedSound = new Audio('sounds/failed.mp3');
+
     function checkGameOver() {
         if (!gameOver.classList.contains('hidden')) {
-            music.play();
+            setTimeout(() => {
+                failedSound.play();
+            }, 800);
+            setTimeout(() => {
+                music.play();
+            }, 2300);
         }
     }
 
-    // Chamar a função quando a página é carregada
     checkGameOver();
 
-    // Adicionar um observador de mutação para detectar mudanças na classe da div 'game-over'
     const observer = new MutationObserver(checkGameOver);
     observer.observe(gameOver, { attributes: true, attributeFilter: ['class'] });
 });
@@ -66,12 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-// dog barking -> duck-script
-// dead duck fall -> duck-script
-// shot sound -> duck-script
-// dogLaugh -> duck-script
-//fly and quack sound -> duck-script
 
 
 

@@ -99,7 +99,7 @@ const playRound = () => {
         dogLaugh();
         setTimeout(() => {
         window.location.href = "menu.html";    
-        }, 3500);
+        }, 7000);
         return
     }
     roundAlertElement.innerHTML = "ROUND " + round;
@@ -155,12 +155,15 @@ const toggleMessage = (element) => {
 }
 
 //Duck
-const flyAndQuackSound = new Audio('sounds/fly_quack.mp3');
-let isPlaying = true;
+const flyAndQuackSound = new Audio('sounds/quack_fly.mp3');
+let isPlaying = false;
+let fall = false;
+let flyAway = false;
 
 // duck sound : loop / stop loop
 const duckSoundLoop = () => {
-    if (!isPlaying) return;
+    if (!flyAndQuackSound.paused) return;
+    flyAndQuackSound.currentTime = 0;
     flyAndQuackSound.play();
     flyAndQuackSound.onended = duckSoundLoop;
 }
@@ -168,6 +171,7 @@ const duckSoundLoop = () => {
 const stopLoop = () => {
     isPlaying = false;
     flyAndQuackSound.pause();
+    flyAndQuackSound.currentTime = 0;
 }
 
 
@@ -202,8 +206,9 @@ const spawnDuck = () => {
     duckSoundLoop();
     duckMoveIntervalId = setInterval(changeDirection, duckMoveChangeInterval);
 
+    
     const stopLoopIntervalId = setInterval(() => {
-        if(duckFall || duckEscape) {
+        if(fall || flyAway) {
             stopLoop();
             clearInterval(stopLoopIntervalId);
         }
@@ -320,6 +325,7 @@ const duckFall = (isShot) => {
     duckElement.style.translate = `calc(${currentX}px - 45vw) 16vh`;
     //sound method
     fallSound.play();
+    fall = true;
 }
 
 const duckEscape = () => {
@@ -328,6 +334,7 @@ const duckEscape = () => {
     duckElement.style.translate = "calc(" + currentX + "px - 45vw) -120vh";
     toggleSkyColor("pink");
     toggleMessage(flyAwayAlert);
+    flyAway = true;
 }
 
 const createDuck = () => {
@@ -372,7 +379,9 @@ const dogSmell = () => {
 const dogJump = () => {
     dogElement.className = "jump";
     //sound method
-    barkSound.play();
+    setTimeout(() => {
+        barkSound.play();
+    }, 1500);
 }
 
 const dogHide = () => {
@@ -418,11 +427,15 @@ function changeDuckBoardColor(){
     }
 }
 
+const roundClearSound = new Audio('sounds/round_clear.mp3');
 function resetDuckBoard() {
     let duckItems = document.querySelectorAll('.duck-red');
     duckItems.forEach((duckItem) => {
         duckItem.classList.remove('duck-red');
     });
+    if(round > 1) {
+        roundClearSound.play();
+    }
 }
 
 //Misc methods
