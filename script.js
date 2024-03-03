@@ -89,7 +89,7 @@ window.addEventListener('resize', function(){
 
 //update topscore
 function getTopScore() {
-    let topScore = localStorage.getItem(score);
+    let topScore = localStorage.getItem('topScore');
     return topScore ? parseInt(topScore) : 0;
 }
 
@@ -100,13 +100,9 @@ function updateTopScore(newScore) {
         localStorage.setItem('topScore', topScore);
 
     }
-    document.getElementById('menu-scores').textContent = getTopScore();
+    document.getElementById('menu-scores').textContent = topScore;
 }
 
-function updateScore(newScore) {
-    score = newScore;
-    updateTopScore(newScore);
-}
 
 window.onload = function() {
     document.getElementById('menu-scores').textContent = getTopScore();
