@@ -156,6 +156,20 @@ const toggleMessage = (element) => {
 
 //Duck
 const flyAndQuackSound = new Audio('sounds/fly_quack.mp3');
+let isPlaying = true;
+
+// duck sound : loop / stop loop
+const duckSoundLoop = () => {
+    if (!isPlaying) return;
+    flyAndQuackSound.play();
+    flyAndQuackSound.onended = duckSoundLoop;
+}
+
+const stopLoop = () => {
+    isPlaying = false;
+    flyAndQuackSound.pause();
+}
+
 
 const toggleSkyColor = (color) => {
     bodyElement.style.backgroundColor = color;
@@ -184,8 +198,16 @@ const spawnDuck = () => {
     createDuck();
     duckElement = document.getElementsByClassName("duck")[0];
     duckAddEvent(duckElement);
-    flyAndQuackSound.play();
+    isPlaying = true;
+    duckSoundLoop();
     duckMoveIntervalId = setInterval(changeDirection, duckMoveChangeInterval);
+
+    const stopLoopIntervalId = setInterval(() => {
+        if(duckFall || duckEscape) {
+            stopLoop();
+            clearInterval(stopLoopIntervalId);
+        }
+    }, 100);
 }
 
 const removeDuck = () => {

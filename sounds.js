@@ -34,10 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameOver = document.querySelector('.game-over');
     const music = document.getElementById('game-over-music');
     
-    // Função para verificar se a classe 'hidden' foi removida da div 'game-over'
     function checkGameOver() {
         if (!gameOver.classList.contains('hidden')) {
-            // Se a classe 'hidden' foi removida, reproduzir o áudio
             music.play();
         }
     }
