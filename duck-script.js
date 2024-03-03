@@ -28,8 +28,22 @@ const startButtonElement = document.getElementsByClassName("start")[0];
 const roundPanelElement = document.getElementsByClassName("round-container")[0];
 let duckElement;
 
+
+//WINDOW LOAD
+
+/* ### uncomment to start the game ### */
+
+startButtonElement.addEventListener('click', (event) => {
+    event.stopPropagation();
+    startButtonElement.style.display = "none";
+    dogIntro();
+    setTimeout(() => {
+        playGame();
+    }, 10000);
+    window.onclick = handleWindowClick;
+}); 
+
 //Game logic methods
-window.onclick = handleWindowClick;
 
 function handleWindowClick(event) {
     if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
@@ -37,7 +51,6 @@ function handleWindowClick(event) {
         updateBulletsImgs();
         shotSound();
     }
-    //BUG bird can still be shot after bullets run out
 }
 
 //TODO add perfect round alert
@@ -95,7 +108,7 @@ const playRound = () => {
     ducksSpawned = 0;
     ducksShot = 0;
     resetDuckBoard();
-    updateDucksToWin(round)
+    updateDucksToWin(round);
     setTimeout(() => {
         toggleMessage(roundAlertElement);
         spawnDuck();
@@ -109,16 +122,32 @@ const playGame = () => {
 const updateDucksToWin = (nRounds) => {
     if (nRounds > 19) {
         ducksToWin = 10;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 14) {
         ducksToWin = 9;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 12) {
         ducksToWin = 8;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 10) {
         ducksToWin = 7;
+        selectDuckstoWin(ducksToWin);
     } else if (nRounds > 0) {
         ducksToWin = 6;
+        selectDuckstoWin(ducksToWin);
     }
 }
+
+function selectDuckstoWin(ducksToWin){
+    let minDucks = document.querySelectorAll('.min-ducks');
+    for (let i = 0; i < minDucks.length - ducksToWin; i++) {
+        if (minDucks[i]) {
+            minDucks[i].remove();
+        }
+    }
+}
+
+
 
 //Visual methods
 const toggleMessage = (element) => {
@@ -164,7 +193,10 @@ const removeDuck = () => {
 }
 
 const duckAddEvent = (element) => {
-    duckElement.addEventListener('click', () => {    
+    duckElement.addEventListener('click', () => {
+        if (bullets < 1 || gamePaused) {
+            return;
+        }
         duckElement.className = "duck";
         checkDuckType(duckElement.id);
         clearInterval(duckMoveIntervalId);
@@ -450,15 +482,3 @@ function unpause() {
 
     gamePaused = false;
 }
-
-
-//WINDOW LOAD
-/* ### uncomment below to start the game ### */
-
-/* startButtonElement.addEventListener('click', () => {
-    startButtonElement.style.display = "none";
-    dogIntro();
-    setTimeout(() => {
-        playGame();
-    }, 10000);
-}); */
