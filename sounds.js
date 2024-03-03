@@ -46,10 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Chamar a função quando a página é carregada
     checkGameOver();
 
-    // Adicionar um observador de mutação para detectar mudanças na classe da div 'game-over'
     const observer = new MutationObserver(checkGameOver);
     observer.observe(gameOver, { attributes: true, attributeFilter: ['class'] });
 });
@@ -72,12 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-// dog barking -> duck-script
-// dead duck fall -> duck-script
-// shot sound -> duck-script
-// dogLaugh -> duck-script
-//fly and quack sound -> duck-script
 
 
 

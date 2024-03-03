@@ -65,19 +65,18 @@ html {
     color: white;
 }
 
-
+.top-scores, .credits {
+    font-family: 'Press Start 2P', sans-serif;
+    text-align: center;
+}
 .top-scores{
     margin-top: 50px;
     padding-top: 80px;
-    font-family: 'Press Start 2P', sans-serif;
-    text-align: center;
     color: #29e626;
     font-size: 15px;
 }
 .credits{
-    font-family: 'Press Start 2P', sans-serif;
     font-size: 10px;
-    text-align: center;
     color: #FFD864;
     position: absolute;
     bottom: 10px;

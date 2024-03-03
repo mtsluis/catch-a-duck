@@ -379,7 +379,9 @@ const dogSmell = () => {
 const dogJump = () => {
     dogElement.className = "jump";
     //sound method
-    barkSound.play();
+    setTimeout(() => {
+        barkSound.play();
+    }, 1500);
 }
 
 const dogHide = () => {

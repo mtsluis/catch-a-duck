@@ -254,13 +254,10 @@ body {
   width: 180px;
 }
 
-.button-resume:hover{
+.button-resume:hover, .button-quit:hover{
   opacity: 1;
 }
 
-.button-quit:hover{
-  opacity: 1;
-}
 
 @media only screen and (max-width: 600px){
   .pause{
