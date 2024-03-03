@@ -61,7 +61,7 @@ body {
     width: 2.5em;
     height: 1.6em;
     padding-top: .15em;
-    padding-left: .1em;
+    padding-left: .16em;
     grid-column: 2;
     grid-row: 4;
     justify-items: center;
@@ -100,8 +100,9 @@ body {
     height: 3em;
     color: white;
     padding-right: .05em;
-    padding-top: .08em;
+    padding-top: .3em;
 }
+
 .bullets {
     content: url(imgs/bullet.png);
     grid-row: 1;
