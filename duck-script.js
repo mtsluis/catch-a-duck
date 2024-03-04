@@ -386,7 +386,7 @@ const dogJump = () => {
     //sound method
     setTimeout(() => {
         barkSound.play();
-    }, 1500);
+    }, 400);
 }
 
 const dogHide = () => {
