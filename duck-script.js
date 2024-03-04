@@ -31,8 +31,6 @@ let duckElement;
 
 //WINDOW LOAD
 
-/* ### uncomment to start the game ### */
-
 startButtonElement.addEventListener('click', (event) => {
     event.stopPropagation();
     startButtonElement.style.display = "none";
@@ -45,16 +43,32 @@ startButtonElement.addEventListener('click', (event) => {
 
 //Game logic methods
 
-function handleWindowClick(event) {
-    if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
-        bullets--;
-        updateBulletsImgs();
-        shotSound();
-    }
+const playGame = () => {
+    playRound();
 }
 
-//TODO add perfect round alert
-//TODO add game over logic and screen
+const playRound = () => {
+    if (ducksShot < ducksToWin) {
+        toggleMessage(gameOverAlert);
+        dogLaugh();
+        updateTopScore(score);
+        setTimeout(() => {
+        window.location.href = "menu.html";
+        }, 7000);
+        return
+    }
+    roundAlertElement.innerHTML = "ROUND " + round;
+    toggleMessage(roundAlertElement);
+    updateRound();
+    ducksSpawned = 0;
+    ducksShot = 0;
+    resetDuckBoard();
+    updateDucksToWin(round);
+    setTimeout(() => {
+        toggleMessage(roundAlertElement);
+        spawnDuck();
+    }, 2000);
+}
 
 function duckScore(ducks, round) { //score for each duck
     if(round <= 5){
@@ -87,41 +101,6 @@ function duckScore(ducks, round) { //score for each duck
     }
 }
 
-function updateTopScore(newScore) {
-    let topScore = localStorage.getItem('topScore');
-    if(newScore > topScore) {
-        topScore = newScore;
-        localStorage.setItem('topScore', topScore);
-    }
-}
-
-const playRound = () => {
-    if (ducksShot < ducksToWin) {
-        toggleMessage(gameOverAlert);
-        dogLaugh();
-        updateTopScore(score);
-        setTimeout(() => {
-        window.location.href = "menu.html";    
-        }, 7000);
-        return
-    }
-    roundAlertElement.innerHTML = "ROUND " + round;
-    toggleMessage(roundAlertElement);
-    updateRound();
-    ducksSpawned = 0;
-    ducksShot = 0;
-    resetDuckBoard();
-    updateDucksToWin(round);
-    setTimeout(() => {
-        toggleMessage(roundAlertElement);
-        spawnDuck();
-    }, 2000);
-}
-
-const playGame = () => {
-    playRound();
-}
-
 const updateDucksToWin = (nRounds) => {
     if (nRounds > 19) {
         ducksToWin = 10;
@@ -141,6 +120,14 @@ const updateDucksToWin = (nRounds) => {
     }
 }
 
+function updateTopScore(newScore) {
+    let topScore = localStorage.getItem('topScore');
+    if(newScore > topScore) {
+        topScore = newScore;
+        localStorage.setItem('topScore', topScore);
+    }
+}
+
 function selectDuckstoWin(ducksToWin){
     let minDucks = document.querySelectorAll('.min-ducks');
     for (let i = 0; i < minDucks.length - ducksToWin; i++) {
@@ -150,7 +137,13 @@ function selectDuckstoWin(ducksToWin){
     }
 }
 
-
+function handleWindowClick(event) {
+    if (bullets > 0 && !gamePaused && event.target !== buttonResume) {
+        bullets--;
+        updateBulletsImgs();
+        shotSound();
+    }
+}
 
 //Visual methods
 const toggleMessage = (element) => {
@@ -163,7 +156,7 @@ let isPlaying = false;
 let fall = false;
 let flyAway = false;
 
-// duck sound : loop / stop loop
+//Duck sound : loop / stop loop
 const duckSoundLoop = () => {
     if (!flyAndQuackSound.paused) return;
     flyAndQuackSound.currentTime = 0;
@@ -192,7 +185,9 @@ const updateRound = () => {
     roundPanelElement.innerHTML = `R${round}`;
 }
 
-//Duck
+//TODO add perfect round alert
+
+//Duck visuals
 const spawnDuck = () => {
     toggleSkyColor("rgb(78, 157, 231)");
     resetBullets();
@@ -284,12 +279,7 @@ const checkDirection = (x, y) => {
     const currentX = duckElement.getBoundingClientRect().x;
     const currentY = duckElement.getBoundingClientRect().y;
     duckElement.style.rotate = "0deg";
-    duckElement.style.transform = "scale(3)";
-    /* if (x < 0) {
-        duckElement.className = "duck horizontal";
-        duckElement.style.transform = "scale(3) scaleY(-1)";
-        return
-    } */ 
+    duckElement.style.transform = "scale(3)"; 
     if (x < 0 && y < 0) {
         duckElement.style.transform = "scale(3) scaleX(-1)";
         return
