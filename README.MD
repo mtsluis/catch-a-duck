@@ -1,5 +1,5 @@
 <h1 align="center"> Catch a Duck</h1>
-
+![game logo](https://github.com/mtsluis/catch-a-duck/blob/main/imgs/cad_screen.png)
 A replica of the famous Duck Hunt game. This project was developed using HMTL/CSS and JavaScript, as a learning project.
 
 ## How to install:
