@@ -214,6 +214,8 @@ const spawnDuck = () => {
         if(fall || flyAway) {
             stopLoop();
             clearInterval(stopLoopIntervalId);
+            fall = false;
+            flyAway = false;
         }
     }, 100);
 }
