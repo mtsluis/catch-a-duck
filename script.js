@@ -93,17 +93,6 @@ function getTopScore() {
     return topScore ? parseInt(topScore) : 0;
 }
 
-function updateTopScore(newScore) {
-    let topScore = getTopScore();
-    if(newScore > topScore) {
-        topScore = newScore;
-        localStorage.setItem('topScore', topScore);
-
-    }
-    document.getElementById('menu-scores').textContent = topScore;
-}
-
-
 window.onload = function() {
     document.getElementById('menu-scores').textContent = getTopScore();
 }

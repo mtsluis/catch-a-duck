@@ -87,16 +87,19 @@ function duckScore(ducks, round) { //score for each duck
     }
 }
 
-function topScore(score, topScores){
-    if(score > topScores){
-        topScores = score;
-    } return topScores;
+function updateTopScore(newScore) {
+    let topScore = localStorage.getItem('topScore');
+    if(newScore > topScore) {
+        topScore = newScore;
+        localStorage.setItem('topScore', topScore);
+    }
 }
 
 const playRound = () => {
     if (ducksShot < ducksToWin) {
         toggleMessage(gameOverAlert);
         dogLaugh();
+        updateTopScore(score);
         setTimeout(() => {
         window.location.href = "menu.html";    
         }, 7000);
@@ -211,6 +214,8 @@ const spawnDuck = () => {
         if(fall || flyAway) {
             stopLoop();
             clearInterval(stopLoopIntervalId);
+            fall = false;
+            flyAway = false;
         }
     }, 100);
 }
@@ -381,7 +386,7 @@ const dogJump = () => {
     //sound method
     setTimeout(() => {
         barkSound.play();
-    }, 1500);
+    }, 400);
 }
 
 const dogHide = () => {
