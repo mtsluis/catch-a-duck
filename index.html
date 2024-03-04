@@ -4,11 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catch a Duck - Browser Game</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="game-styles.css">
+    <link rel="stylesheet" href="dog-duck-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="duck-script.js" defer></script>
+    <script src="sounds.js" defer></script>
 </head>
 <body>
-    <div id="background"></div>
-    
+    <div class="start">
+        <audio id="intro-music" controls hidden>
+            <source src="sounds/2_intro.mp3" type="audio/mpeg"> 
+        </audio>
+        <button id="start-btn" onclick="introMusic()">START</button>
+    </div>
+    <div id="background">
+        <div id="display-info">
+            <div class="round-alert hidden"><span class="round-number"></span></div>
+            <div class="perfect-score hidden">PERFECT!!</div>
+            <audio id="perfect-score-sound" controls hidden>
+                <source src="sounds/perfect.mp3" type="audio/mpeg">
+            </audio>
+            <div class="fly-away hidden">FLY AWAY</div>
+            <div class="game-over hidden">GAME OVER</div>
+            <audio id="game-over-music" controls hidden>
+                <source src="sounds/game_over.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        <div id="game-info">
+            <div class="round-container">R<span class="round-number"></span></div>
+            <div class="shot-container">
+                <div class="bullets"></div>
+                <div class="bullets"></div>
+                <div class="bullets"></div>
+                <div class="shot">SHOT</div>
+            </div>
+            <div class="hit-container">
+                <div class="hit">HIT</div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="duck-item"></div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+                <div class="min-ducks">||||</div>
+            </div>
+            <div class="score-container">
+                <div class="score">000000</div>
+                <div class="score-text">SCORE</div>
+            </div>
+        </div>
+    </div>
+    <div id="dog"></div>
+    <audio id="dog-bark" controls hidden>
+        <source src="sounds/3_dog_bark.mp3" type="audio/mpeg">
+    </audio>
 </body>
 </html>
